@@ -1,2 +1,2 @@
-# private_datawarehouse-csc-222
-private datawarehouse for personal study
+# csc-222_data-warehouse
+hofstra csc-222 data warehouse with Professor Lowe.

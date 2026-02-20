@@ -1,0 +1,20 @@
+# -*- mode: org; pyenv-workon: "machine_learning-3.12"; -*-
+
+#+begin_src python :session my_ai_env :results output
+  import numpy as np
+  a = np.random.randint(1,10,(4,3))
+  b = np.random.randint(1,5,(4))
+
+  print(a-b[:,np.newaxis])
+
+#+end_src
+
+#+RESULTS:
+: [[ 2 -1  2]
+:  [ 4 -1  6]
+:  [-1  5 -2]
+:  [ 0  1  3]]
+
+
+
+

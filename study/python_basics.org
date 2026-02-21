@@ -106,3 +106,46 @@
 : sum of all elements: np.sum(x) = 21
 : sum of each column: np.sum(x, axis=0) = [ 9 12]
 : sum of each row: np.sum(x, axis=1) = [ 3  7 11]
+
+
+#+begin_src python :session my_ai_env :results output
+  # create an isolated generator with a specific seed
+  rng = np.random.default_rng(seed=700868847)
+
+  a = rng.integers(1,10,size=(2,2,3))
+  b = rng.integers(1,10,size=(2,3))
+
+  #a = np.random.randint(1,10,(2,2,3))
+  #b= np.random.randint(1,10,(2,3))
+  print(a)
+  print(b)
+
+  # sum along the last dimension
+  sum_2 = np.sum(a, axis=-1, keepdims=True)
+  print(f"{sum_2.shape=}")
+  print(f"{sum_2=}")
+  # squash the first dimension
+  sum_3 = np.sum(a,axis=0, keepdims=True)
+  print(f"{sum_3=}")
+
+
+#+end_src
+
+#+RESULTS:
+#+begin_example
+[[[2 4 3]
+  [1 8 3]]
+
+ [[5 5 5]
+  [9 7 5]]]
+[[2 7 4]
+ [5 5 9]]
+sum_2.shape=(2, 2, 1)
+sum_2=array([[[ 9],
+        [12]],
+
+       [[15],
+        [21]]])
+sum_3=array([[[ 7,  9,  8],
+        [10, 15,  8]]])
+#+end_example

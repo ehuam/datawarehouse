@@ -149,3 +149,45 @@ sum_2=array([[[ 9],
 sum_3=array([[[ 7,  9,  8],
         [10, 15,  8]]])
 #+end_example
+
+
+#+begin_src python :session my_ai_env :results output
+  x0= np.linspace(1,6,num=6,dtype=int).reshape(3,2)
+
+  x1 = np.array( [[1,2],[3,4],[5,6]] )
+  print(f"{x0=}")
+  print(f"{x1=}")
+  print(f"{np.reshape(x1,(2,3))=}")
+  print(f"{len(x1)=} len is different than size.\n len() tells you the size of 1st\
+  dim")
+  print(f"{x1.size=} size tells you the total number of elements")
+  print(f"flatten {np.reshape(x,-1)=}")
+#+end_src
+
+#+RESULTS:
+#+begin_example
+x0=array([[1, 2],
+       [3, 4],
+       [5, 6]])
+x1=array([[1, 2],
+       [3, 4],
+       [5, 6]])
+np.reshape(x1,(2,3))=array([[1, 2, 3],
+       [4, 5, 6]])
+len(x1)=3 len is different than size.
+ len() tells you the size of 1stdim
+x1.size=6 size tells you the total number of elements
+flatten np.reshape(x,-1)=array([1, 2, 3, 4, 5, 6])
+#+end_example
+
+#+begin_src python :session my_ai_env :results output
+  x =np.linspace(1,4,num=4,dtype=int)
+  print(f"{x=}")
+
+  y = np.linspace(1,6,num=6,dtype=int).reshape(2,3)
+  print(f"{y=}")
+
+#+RESULTS:
+: x=array([1, 2, 3, 4])
+: y=array([[1, 2, 3],
+:        [4, 5, 6]])

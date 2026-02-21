@@ -1,20 +1,108 @@
 # -*- mode: org; pyenv-workon: "machine_learning-3.12"; -*-
 
-#+begin_src python :session my_ai_env :results output
-  import numpy as np
-  a = np.random.randint(1,10,(4,3))
-  b = np.random.randint(1,5,(4))
+;; Import block
 
-  print(a-b[:,np.newaxis])
+#+begin_src python :session my_ai_env :results silent
+
+  import numpy as np
+  import pandas as pd
+  from scipy import sparse
+
+#+end_src
+
+
+#+begin_src python :session my_ai_env :results output
+    a = np.random.randint(1,10,(4,3))
+    b = np.random.randint(1,5,(4))
+
+    print(a-b[:,np.newaxis])
 
 #+end_src
 
 #+RESULTS:
-: [[ 2 -1  2]
-:  [ 4 -1  6]
-:  [-1  5 -2]
-:  [ 0  1  3]]
+: [[2 2 2]
+:  [1 6 3]
+:  [1 2 5]
+:  [3 3 4]]
 
 
 
 
+#+begin_src python :session my_ai_env :results output
+  dense_matrix = np.zeros((10,10))
+  dense_matrix[0,2] = 5
+  dense_matrix[4,1] = 9
+
+  # convert to compressed Sparse Row format
+  sparse_matrix = sparse.csr_matrix(dense_matrix)
+
+  print(f"Dense size: {dense_matrix.nbytes} bytes")
+  print(f"Sparse non-zero count: {sparse_matrix.nnz}")
+  print(sparse_matrix)
+
+#+end_src
+
+#+RESULTS:
+: Dense size: 800 bytes
+: Sparse non-zero count: 2
+: <Compressed Sparse Row sparse matrix of dtype 'float64'
+: 	with 2 stored elements and shape (10, 10)>
+:   Coords	Values
+:   (0, 2)	5.0
+:   (4, 1)	9.0
+
+
+
+#+begin_src python :session my_ai_env :results output
+  v = np.random.randint(1,5,(10))
+
+  print(sparse_matrix.dot(v))
+  
+
+#+end_src
+
+#+RESULTS:
+: [15.  0.  0.  0. 27.  0.  0.  0.  0.  0.]
+
+* Element-wise and Dot Product
+
+#+begin_src python :session my_ai_env :results output
+
+  x = np.array([[1,2],[3,4]])
+  y = np.array([[5,6],[7,8]])
+
+  print(f"x*y={x*y}")
+  print(f"np.multiply(x,y)={np.multiply(x,y)}")
+
+  print(f"np.dot(x,y)={np.dot(x,y)}")
+  print(f"x.dot(y)={x.dot(y)}")
+
+
+#+end_src
+
+#+RESULTS:
+: x*y=[[ 5 12]
+:  [21 32]]
+: np.multiply(x,y)=[[ 5 12]
+:  [21 32]]
+: np.dot(x,y)=[[19 22]
+:  [43 50]]
+: x.dot(y)=[[19 22]
+:  [43 50]]
+
+#+begin_src python :session my_ai_env :results output
+  x = np.array([[1,2],
+               [3,4],
+               [5,6]])
+
+
+  print(f"sum of all elements: np.sum(x) = {np.sum(x)}")
+  print(f"sum of each column: np.sum(x, axis=0) = {np.sum(x,axis=0)}")
+  print(f"sum of each row: np.sum(x, axis=1) = {np.sum(x,axis=1)}")
+
+#+end_src
+
+#+RESULTS:
+: sum of all elements: np.sum(x) = 21
+: sum of each column: np.sum(x, axis=0) = [ 9 12]
+: sum of each row: np.sum(x, axis=1) = [ 3  7 11]

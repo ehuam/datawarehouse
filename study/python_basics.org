@@ -183,11 +183,52 @@ flatten np.reshape(x,-1)=array([1, 2, 3, 4, 5, 6])
 #+begin_src python :session my_ai_env :results output
   x =np.linspace(1,4,num=4,dtype=int)
   print(f"{x=}")
+  print(f"{x.shape=}")
 
   y = np.linspace(1,6,num=6,dtype=int).reshape(2,3)
   print(f"{y=}")
+  print(f"{y.shape=}")
+#+end_src
 
 #+RESULTS:
 : x=array([1, 2, 3, 4])
+: x.shape=(4,)
 : y=array([[1, 2, 3],
 :        [4, 5, 6]])
+: y.shape=(2, 3)
+
+
+#+begin_src python :session my_ai_env :results output
+  # Extend/squeeze dimensionality
+
+  print(f"{x=}")
+  print(f"{x.shape=}")
+  #extend x to have shape (1,4)
+  print(f"{np.expand_dims(x, axis = 0 )=}")
+  print(f"{np.expand_dims(x, axis = 0 ).shape=}")
+
+  print(x[None,:])
+  print(f"{x[None,:].shape=}")
+  print(x[np.newaxis,:])
+  print(f"{x[np.newaxis,:].shape=}")
+
+
+
+#+end_src
+
+#+RESULTS:
+: x=array([1, 2, 3, 4])
+: x.shape=(4,)
+: np.expand_dims(x, axis = 0 )=array([[1, 2, 3, 4]])
+: np.expand_dims(x, axis = 0 ).shape=(1, 4)
+: [[1 2 3 4]]
+: x[None,:].shape=(1, 4)
+: [[1 2 3 4]]
+: x[np.newaxis,:].shape=(1, 4)
+
+
+#+begin_src python :session my_ai_env :results output
+
+
+
+#+end_src

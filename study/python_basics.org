@@ -1,14 +1,24 @@
 # -*- mode: org; pyenv-workon: "machine_learning-3.12"; -*-
 
+#+TITLE: My Scratch Pad for Data Warehouse
 ;; Import block
+#+PROPERTY: header-args:ipython :session my_ai_env :results output
 
-#+begin_src python :session my_ai_env :results silent
-
+* Setup
+#+NAME: startup_imports
+#+begin_src python
   import numpy as np
   import pandas as pd
   from scipy import sparse
+  print("Libraries loaded!")
+    # create an isolated generator with a specific seed
+  rng = np.random.default_rng(seed=700868847)
+
 
 #+end_src
+
+#+RESULTS: startup_imports
+: None
 
 
 #+begin_src python :session my_ai_env :results output
@@ -109,8 +119,6 @@
 
 
 #+begin_src python :session my_ai_env :results output
-  # create an isolated generator with a specific seed
-  rng = np.random.default_rng(seed=700868847)
 
   a = rng.integers(1,10,size=(2,2,3))
   b = rng.integers(1,10,size=(2,3))
@@ -228,7 +236,52 @@ flatten np.reshape(x,-1)=array([1, 2, 3, 4, 5, 6])
 
 
 #+begin_src python :session my_ai_env :results output
+  # over write rng
+  import numpy as np
+  rng = np.random.default_rng(seed=7008868847)
+  x = rng.integers(1,12,size=(3,2))
+  print(x)
+  print(f"shape of {x.shape=}")
+  #default sort
+  print(f"{np.sort(x)=}")
+  #sort along the first axis(rows)
+  print(f"{np.sort(x, axis=0)=}")
+
+  #sort along the second axis(cols)
+  print(f"{np.sort(x,axis=1)=}")
+
+  # sort the matrix along the second axis (columns)
+  # the default value of "axis" is -1, the last axis
+  print(f"{np.sort(x)[:,::-1]=}")
+
+
+
 
 
 
 #+end_src
+
+#+RESULTS:
+#+begin_example
+[[ 6  6]
+ [10  8]
+ [ 9  3]]
+shape of x.shape=(3, 2)
+np.sort(x)=array([[ 6,  6],
+       [ 8, 10],
+       [ 3,  9]])
+np.sort(x, axis=0)=array([[ 6,  3],
+       [ 9,  6],
+       [10,  8]])
+np.sort(x,axis=1)=array([[ 6,  6],
+       [ 8, 10],
+       [ 3,  9]])
+np.sort(x)[:,::-1]=array([[ 6,  6],
+       [10,  8],
+       [ 9,  3]])
+#+end_example
+
+
+# Local Variables:
+# eval: (pyenv-workon "machine_learning-3.12")
+# End:

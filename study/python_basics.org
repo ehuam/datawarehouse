@@ -1,3 +1,4 @@
+
 # -*- mode: org; pyenv-workon: "machine_learning-3.12"; -*-
 
 #+TITLE: My Scratch Pad for Data Warehouse
@@ -291,3 +292,46 @@ np.sort(x)[:,::-1]=array([[ 6,  6],
 #+end_src
 
 #+RESULTS:
+: x=array([[3, 2, 5],
+:        [3, 4, 1]])
+
+
+** Generator
+
+#+begin_src python :session my_ai_env :results output
+
+  def series_generator(low, high):
+      while low <= high:
+          yield low
+          low +=1
+
+  n_list = list()
+  g = series_generator(1,10)
+
+  while True:
+      try:
+          num = next(g)
+          print(f"Manually grabbed: {num=}")
+      except StopIteration:
+          print("Generator is empty")
+          break
+
+
+          
+
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Manually grabbed: num=1
+Manually grabbed: num=2
+Manually grabbed: num=3
+Manually grabbed: num=4
+Manually grabbed: num=5
+Manually grabbed: num=6
+Manually grabbed: num=7
+Manually grabbed: num=8
+Manually grabbed: num=9
+Manually grabbed: num=10
+Generator is empty
+#+end_example

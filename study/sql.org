@@ -1,0 +1,29 @@
+#+Title: SQL Overview
+
+* Types of Keys in Relational Model
+
+# In order of uniqueness
+
+1. Super Key: any set of cols that can uniquely identify a row, can have extra info.
+2. Candidate Key: smallest set of columns, where if you remove any single column, it no
+   longer uniquely identifies the row.
+3. Primary Key: Picking one of the candidate keys; official ID for the record.
+   Can never be NULL and must be unique.
+4. Composite Key: Primary (Candidate) Key that consists of more than one column.
+5. Foreign Key: creates a link between tables.
+
+
+* How to update a database
+
+** Data Definition Language (DDL)
+
+DDL is the Architectural Blueprint of a database.
+It is similar to defining a class ( a schema) where the actual data is the instance
+of that class.
+
+*** Core  DDL Commands
+1. CREATE - used to build a new table, database, or index
+2. ALTER - used to modify an existing structure without deleting it.
+3. DROP - delete the entire table structure and all the data inside
+4. TRUNCATE - hybrid. Removes all rows from a table, but keeps the shape (col,types)
+   intact for future use.

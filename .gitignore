@@ -210,3 +210,6 @@ __marimo__/
 # handle pickles
 *pkl
 \#*
+
+# macos files
+.DS_Store

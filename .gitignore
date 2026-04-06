@@ -213,3 +213,6 @@ __marimo__/
 
 # macos files
 .DS_Store
+
+#user files
+*.db

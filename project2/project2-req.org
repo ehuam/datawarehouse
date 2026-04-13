@@ -7,8 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1Asx0rolNcU8dYOiOGxlL1df167Q5hft9
 * # SQL Data Warehousing Project: Analyzing the 2008 Financial Crisis
 Walkthrough/Template/Data: https://colab.research.google.com/drive/1_uqMWaN9JbOeskcYUL7y_9f2PCY1fRIv?usp=sharing
-
-## Project Objectives
+Project Objectives
 1. Build an efficient SQL database to analyze the Global Financial Crisis using Barra data
 2. Demonstrate mastery of SQL data warehousing concepts:
    - Proper schema design with multiple tables
@@ -33,15 +32,15 @@ The Barra dataset includes columns with '%' in their names (e.g., 'SRISK%', 'TRI
 
 ## Required Technical Demonstrations
 * ### 1. Database Schema Design (20%)
-Create at least 3 tables:
+- Create at least 3 tables:
   - 2007 Barra USE3 data
   - 2008 Barra USE3 data  
   - Industry-to-Sector mapping (from PDF pages 83-84)
-  - Use the Industry-to-Sector table for all sector-related queries
-  - Address column naming issues (columns with '%')
-  - Optimize data types with justification
-  - Implement primary keys and foreign key relationships
-  - Create both single and composite indices
+- Use the Industry-to-Sector table for all sector-related queries
+- Address column naming issues (columns with '%')
+- Optimize data types with justification
+- Implement primary keys and foreign key relationships
+- Create both single and composite indices
     
 * ### 2. Risk Metrics Analysis (25%)
 **Key Decisions Required:**

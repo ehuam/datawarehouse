@@ -41,7 +41,7 @@ The Barra dataset includes columns with '%' in their names (e.g., 'SRISK%', 'TRI
 - Optimize data types with justification
 - Implement primary keys and foreign key relationships
 - Create both single and composite indices
-    
+  
 * ### 2. Risk Metrics Analysis (25%)
 **Key Decisions Required:**
 
@@ -66,17 +66,17 @@ Using SQL, calculate mean and standard deviation for potential risk indicators:
 
 Determine which factors (individually or in combination) best predict PCT_CHANGE between 2007-2008.
 
-### 3. Transaction Management (15%)
+* ### 3. Transaction Management (15%)
 **Scenario**: Your risk management department has a "crystal ball" predicting the 2008 crisis.
 
 Demonstrate a transaction that:
-* Identifies Bear Stearns and Lehman Brothers BARRIDs
-* Temporarily adjusts their risk metrics based on "prediction"
-* Analyzes impact on portfolio risk
-* Uses ROLLBACK to restore original data
-* Documents the what-if analysis results
+- Identifies Bear Stearns and Lehman Brothers BARRIDs
+- Temporarily adjusts their risk metrics based on "prediction"
+- Analyzes impact on portfolio risk
+- Uses ROLLBACK to restore original data
+- Documents the what-if analysis results
 
-### **4. Sector Analysis (20%)**
+* ### **4. Sector Analysis (20%)**
 Financial Services Deep Dive:
 - Use your Industry-to-Sector mapping table to query which industries belong to the Financial Services sector
 - Use the resulting industry list in your WHERE clause with INDNAME1
@@ -85,9 +85,9 @@ Financial Services Deep Dive:
 
 ### 5. Complex Query Techniques (20%)
 Implement the same analysis using all three methods:
-* **CTE (WITH clause)**: For multi-step calculations
-* **VIEW**: For reusable logic
-* **SUBQUERY**: For inline calculations
+- **CTE (WITH clause)**: For multi-step calculations
+- **VIEW**: For reusable logic
+** **SUBQUERY**: For inline calculations
 
 Compare performance and readability, recommend the best approach.
 
@@ -95,15 +95,15 @@ Example of query to identify risky companies to a hypothetical risk committee:
 - Calculate z-scores for multiple risk factors
 - Identify outliers within each sector (by cross referencing INDNAME1 with the Industry-to-Sector table).
 - Rank companies by composite risk score
-
-### 6. JOIN Operations Showcase (20%)
+  
+* ### 6. JOIN Operations Showcase (20%)
 Demonstrate these JOIN types with meaningful analysis:
-* **INNER JOIN**: Companies surviving both years
-* **LEFT JOIN**: All 2007 companies, showing which disappeared
-* **Simulated FULL OUTER JOIN**: Complete picture using UNION approach
-* Show proper NULL handling in JOIN results
+- **INNER JOIN**: Companies surviving both years
+- **LEFT JOIN**: All 2007 companies, showing which disappeared
+- **Simulated FULL OUTER JOIN**: Complete picture using UNION approach
+- Show proper NULL handling in JOIN results
 
-## Analysis Requirements
+* ## Analysis Requirements
 
 ### Core Analyses (Complete ALL)
 
@@ -131,45 +131,44 @@ Demonstrate these JOIN types with meaningful analysis:
    - Statistical comparison of SRISK% vs TRISK%
    - Recommendation with evidence
 
-## Deliverables
+* ## Deliverables
 
 ### 1. Code Notebook
-* Schema creation with column naming decisions
-* Index creation and EXPLAIN plan analysis
-* Transaction examples with Bear Stearns/Lehman scenarios
-* All three query methods comparison
-* Risk factor statistical calculations in SQL
-* JOIN demonstrations with NULL handling
+- Schema creation with column naming decisions
+- Index creation and EXPLAIN plan analysis
+- Transaction examples with Bear Stearns/Lehman scenarios
+- All three query methods comparison
+- Risk factor statistical calculations in SQL
+- JOIN demonstrations with NULL handling
 
 ### 2. Database Documentation
-* ERD showing all tables and relationships
-* Column naming convention and any modifications
-* Data type justifications
-* Handling of estimation universe filtering
-* NULL handling strategy
+- ERD showing all tables and relationships
+- Column naming convention and any modifications
+- Data type justifications
+- Handling of estimation universe filtering
+- NULL handling strategy
 
 ### 3. Analysis Report
-* Executive summary of risk factor findings
-* Beta and risk measure recommendations
-* Sector impact analysis
-* Visualizations (using Python after SQL retrieval)
-* Performance metrics for different query approaches
+- Executive summary of risk factor findings
+- Beta and risk measure recommendations
+- Sector impact analysis
+- Visualizations (using Python after SQL retrieval)
+- Performance metrics for different query approaches
 
 ### 4. Presentation Video (10-15 minutes)
-* Live demonstration of:
+** Live demonstration of:
   - Transaction with Bear Stearns/Lehman scenario
   - Risk factor statistical calculations
   - JOIN operations showing survivor analysis
   - Query method comparison (CTE vs View vs Subquery)
-* Key insights about predictive risk factors
-* Technical decisions and trade-offs
+- Key insights about predictive risk factors
+- Technical decisions and trade-offs
 
 ### 5. Trello Board
-* Task assignments and progress
-* Query development tracking
-* Testing and optimization notes
-
-## Grading Rubric
+- Task assignments and progress
+- Query development tracking
+- Testing and optimization notes
+* ## Grading Rubric
 
 | Component | Weight | Details |
 |-----------|--------|---------|
@@ -180,34 +179,34 @@ Demonstrate these JOIN types with meaningful analysis:
 | Sector Analysis | 15% | Complete mapping, financial services focus |
 | Documentation | 5% | Clear, complete, professional |
 
-## Key Requirements and Hints
-* Build the complete industry-to-sector mapping table from Barra handbook PDF pages 83-84
+* ## Key Requirements and Hints
+** Build the complete industry-to-sector mapping table from Barra handbook PDF pages 83-84
   * Use SQL JOINs with your mapping table rather than hard-coding industry lists
   * All sector analysis should query the mapping table first, then join with Barra data
   * This demonstrates proper database normalization and JOIN usage
-* Calculate all statistics (mean, stddev) directly in SQL, not Python
-* Handle estimation universe filtering properly to avoid bias
-* Performance matters - use EXPLAIN to show optimization
-* Your risk predictions should be data-driven and justified
-* Focus on SQL mastery, not financial theory
+- Calculate all statistics (mean, stddev) directly in SQL, not Python
+- Handle estimation universe filtering properly to avoid bias
+- Performance matters - use EXPLAIN to show optimization
+- Your risk predictions should be data-driven and justified
+- Focus on SQL mastery, not financial theory
 
 ## Bonus Opportunities (up to 10% extra)
-* Implement composite risk score using multiple factors
-* Create automated column renaming system for best practices
-* Build cross-validation framework in SQL
-* Develop early warning system based on your findings
-* Create interactive risk dashboard with parameterized queries
+- Implement composite risk score using multiple factors
+- Create automated column renaming system for best practices
+- Build cross-validation framework in SQL
+- Develop early warning system based on your findings
+- Create interactive risk dashboard with parameterized queries
 
-Remember: This project tests your SQL and data warehousing skills. Use the financial crisis as a compelling context to demonstrate sophisticated database techniques and analytical thinking.
-
-## Data Handbook
-* https://www.alacra.com/alacra/help/barra_handbook_US.pdf
+Remember: This project tests your SQL and data warehousing skills. Use the financial crisis as a compelling context to
+demonstrate sophisticated database techniques and analytical thinking.
+* ## Data Handbook
+- https://www.alacra.com/alacra/help/barra_handbook_US.pdf
 """
 
 
 
 """# Barra Data from Dec 2007
-* Before the Global Financial Crisis of 2008
+** Before the Global Financial Crisis of 2008
 """
 
 ! gdown 1Y0WE4cqbZfdNEvFuWIDR_d6oDbHHNkly
@@ -217,7 +216,7 @@ Remember: This project tests your SQL and data warehousing skills. Use the finan
 ! head /content/USE3L0712.RSK
 
 """# Barra Data from Dec 2008
-* After the Global Financial Crisis of 2008
+** After the Global Financial Crisis of 2008
 """
 
 ! gdown 1Z3vdd5m8uoB4whomq92DQbZHJiKYJc0v

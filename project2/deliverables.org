@@ -1,0 +1,13 @@
+### 2. Database Documentation
+- ERD showing all tables and relationships
+- Column naming convention and any modifications
+- Data type justifications
+- Handling of estimation universe filtering
+- NULL handling strategy
+
+### 3. Analysis Report
+- Executive summary of risk factor findings
+- Beta and risk measure recommendations
+- Sector impact analysis
+- Visualizations (using Python after SQL retrieval)
+- Performance metrics for different query approaches

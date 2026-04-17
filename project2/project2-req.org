@@ -83,11 +83,11 @@ Financial Services Deep Dive:
 - Analyze sector-specific risk patterns
 - Compare Financial Services sector performance against other sectors
 
-### 5. Complex Query Techniques (20%)
+* ### 5. Complex Query Techniques (20%)
 Implement the same analysis using all three methods:
 - **CTE (WITH clause)**: For multi-step calculations
 - **VIEW**: For reusable logic
-** **SUBQUERY**: For inline calculations
+- **SUBQUERY**: For inline calculations
 
 Compare performance and readability, recommend the best approach.
 
@@ -103,7 +103,7 @@ Demonstrate these JOIN types with meaningful analysis:
 - **Simulated FULL OUTER JOIN**: Complete picture using UNION approach
 - Show proper NULL handling in JOIN results
 
-* ## Analysis Requirements
+*  ## Analysis Requirements
 
 ### Core Analyses (Complete ALL)
 
@@ -216,7 +216,7 @@ demonstrate sophisticated database techniques and analytical thinking.
 ! head /content/USE3L0712.RSK
 
 """# Barra Data from Dec 2008
-** After the Global Financial Crisis of 2008
+* After the Global Financial Crisis of 2008
 """
 
 ! gdown 1Z3vdd5m8uoB4whomq92DQbZHJiKYJc0v

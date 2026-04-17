@@ -1,0 +1,1230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2026-04-17 Fri 09:45 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Barra Factor Model Data Documentation</title>
+<meta name="author" content="Edgar Huamantla" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-c:before { content: 'C'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'JavaScript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Barra Factor Model Data Documentation</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgf3120e6">1. Project Requirements</a>
+<ul>
+<li><a href="#org8c50f0e">1.1. Database Documentation</a></li>
+<li><a href="#org8bd4729">1.2. Analysis Report</a></li>
+</ul>
+</li>
+<li><a href="#orge8d0199">2. Data Dictionary</a>
+<ul>
+<li><a href="#org9240147">2.1. table<sub>barra</sub><sub>07</sub></a></li>
+<li><a href="#orgae9ff16">2.2. table<sub>barra</sub><sub>08</sub></a></li>
+<li><a href="#org8081032">2.3. table<sub>industry</sub><sub>to</sub><sub>sector</sub></a></li>
+</ul>
+</li>
+<li><a href="#org5eb8289">3. Ingestion Lineage Log</a>
+<ul>
+<li><a href="#org6daceac">3.1. [1] Initial Load of Data</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgf3120e6" class="outline-2">
+<h2 id="orgf3120e6"><span class="section-number-2">1.</span> Project Requirements</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org8c50f0e" class="outline-3">
+<h3 id="org8c50f0e"><span class="section-number-3">1.1.</span> Database Documentation</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>ERD showing all tables and relationships</li>
+<li>Column naming convention and any modifications</li>
+<li>Data type justifications</li>
+<li>Handling of estimation universe filtering</li>
+<li>NULL handling strategy</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org8bd4729" class="outline-3">
+<h3 id="org8bd4729"><span class="section-number-3">1.2.</span> Analysis Report</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li>Executive summary of risk factor findings</li>
+<li>Beta and risk measure recommendations</li>
+<li>Sector impact analysis</li>
+<li>Visualizations (using Python after SQL retrieval)</li>
+<li>Performance metrics for different query approaches</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orge8d0199" class="outline-2">
+<h2 id="orge8d0199"><span class="section-number-2">2.</span> Data Dictionary</h2>
+<div class="outline-text-2" id="text-2">
+
+<div id="org81333c0" class="figure">
+<p><img src="barra_schema.png" alt="barra_schema.png" />
+</p>
+</div>
+</div>
+<div id="outline-container-org9240147" class="outline-3">
+<h3 id="org9240147"><span class="section-number-3">2.1.</span> table<sub>barra</sub><sub>07</sub></h3>
+<div class="outline-text-3" id="text-2-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Column</th>
+<th scope="col" class="org-left">DTYPE</th>
+<th scope="col" class="org-left">Key</th>
+<th scope="col" class="org-left">Constraints</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">barrid<sub>07</sub></td>
+<td class="org-left">VARCHAR(11)</td>
+<td class="org-left">PKEY</td>
+<td class="org-left">NOT NULL</td>
+<td class="org-left">barra id</td>
+</tr>
+
+<tr>
+<td class="org-left">ticker<sub>07</sub></td>
+<td class="org-left">VARCHAR(9)</td>
+<td class="org-left">IDX</td>
+<td class="org-left">&nbsp;</td>
+<td class="org-left">stock ticker</td>
+</tr>
+
+<tr>
+<td class="org-left">cusip<sub>07</sub></td>
+<td class="org-left">VARCHAR(12)</td>
+<td class="org-left">IDX</td>
+<td class="org-left">UNIQUE, NOT NULL</td>
+<td class="org-left">unique instrument ID</td>
+</tr>
+
+<tr>
+<td class="org-left">name<sub>07</sub></td>
+<td class="org-left">VARCHAR(50)</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">name of stock</td>
+</tr>
+
+<tr>
+<td class="org-left">hbta<sub>07</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Historical Beta</td>
+</tr>
+
+<tr>
+<td class="org-left">beta<sub>07</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Predicted Beta</td>
+</tr>
+
+<tr>
+<td class="org-left">srisk<sub>pct</sub><sub>07</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Systematic Risk (%)</td>
+</tr>
+
+<tr>
+<td class="org-left">trisk<sub>pct</sub><sub>07</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Total Risk (%)</td>
+</tr>
+
+<tr>
+<td class="org-left">voltilty<sub>07</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Volatility Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">momentum<sub>07</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Momentum Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">size<sub>07</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Size Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">sizenonl<sub>07</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">SIze Non linearity [log] Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">tradeact<sub>07</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Trading Volume Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">growth<sub>07</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Growth Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">earnyld<sub>07</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Earnings Yield Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">value<sub>07</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Value Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">earnvar<sub>07</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Earnings Variability Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">leverage<sub>07</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Leverage Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">currsen<sub>07</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Currency Sensitivity Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">yield<sub>07</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Yield Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">nonestu<sub>07</sub></td>
+<td class="org-left">BOOLEAN</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">In estimation universe</td>
+</tr>
+
+<tr>
+<td class="org-left">indname1<sub>07</sub></td>
+<td class="org-left">VARCHAR(12)</td>
+<td class="org-left">Foreign Key</td>
+<td class="org-left">-</td>
+<td class="org-left">industry name, Mapped to table<sub>industry</sub><sub>to</sub><sub>sector.industry</sub></td>
+</tr>
+
+<tr>
+<td class="org-left">ind1<sub>07</sub></td>
+<td class="org-left">INTEGER</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">industry code</td>
+</tr>
+
+<tr>
+<td class="org-left">wgt1<sub>pct</sub><sub>07</sub></td>
+<td class="org-left">INTEGER</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">industry weight if operating in more than one industry</td>
+</tr>
+
+<tr>
+<td class="org-left">indname2<sub>07</sub></td>
+<td class="org-left">VARCHAR(12)</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">2nd industry name</td>
+</tr>
+
+<tr>
+<td class="org-left">ind2<sub>07</sub></td>
+<td class="org-left">INTEGER</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">2nd industry code</td>
+</tr>
+
+<tr>
+<td class="org-left">wgt2<sub>pct</sub><sub>07</sub></td>
+<td class="org-left">INTEGER</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">2nd industry weight</td>
+</tr>
+
+<tr>
+<td class="org-left">indname3<sub>07</sub></td>
+<td class="org-left">VARCHAR(12)</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">3rd industry name</td>
+</tr>
+
+<tr>
+<td class="org-left">ind3<sub>07</sub></td>
+<td class="org-left">INTEGER</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">3rd industry code</td>
+</tr>
+
+<tr>
+<td class="org-left">wgt3<sub>pct</sub><sub>07</sub></td>
+<td class="org-left">INTEGER</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">3rd industry weight</td>
+</tr>
+
+<tr>
+<td class="org-left">indname4<sub>07</sub></td>
+<td class="org-left">VARCHAR(12)</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">4th industry name</td>
+</tr>
+
+<tr>
+<td class="org-left">ind4<sub>07</sub></td>
+<td class="org-left">INTEGER</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">4th industry code</td>
+</tr>
+
+<tr>
+<td class="org-left">wgt4<sub>pct</sub><sub>07</sub></td>
+<td class="org-left">INTEGER</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">4th industry weight</td>
+</tr>
+
+<tr>
+<td class="org-left">indname5<sub>07</sub></td>
+<td class="org-left">VARCHAR(12)</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">5th industry name</td>
+</tr>
+
+<tr>
+<td class="org-left">ind5<sub>07</sub></td>
+<td class="org-left">INTEGER</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">5th industry code</td>
+</tr>
+
+<tr>
+<td class="org-left">wgt5<sub>pct</sub><sub>07</sub></td>
+<td class="org-left">INTEGER</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">5th industry weight</td>
+</tr>
+
+<tr>
+<td class="org-left">price<sub>07</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Stock Price</td>
+</tr>
+
+<tr>
+<td class="org-left">capitalization<sub>07</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Market Capitalization (Outstanding Shares * Price)</td>
+</tr>
+
+<tr>
+<td class="org-left">yld<sub>pct</sub><sub>07</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Dividend Yield Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">sap500<sub>07</sub></td>
+<td class="org-left">BOOLEAN</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">S&amp;P 500 Membership</td>
+</tr>
+
+<tr>
+<td class="org-left">sapval<sub>07</sub></td>
+<td class="org-left">BOOLEAN</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">S&amp;P Value Membership</td>
+</tr>
+
+<tr>
+<td class="org-left">sapgro<sub>07</sub></td>
+<td class="org-left">BOOLEAN</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">S&amp;P Growth Membership</td>
+</tr>
+
+<tr>
+<td class="org-left">midcap<sub>07</sub></td>
+<td class="org-left">BOOLEAN</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Middle Market Cap Value (~ 2BN - 10BN)</td>
+</tr>
+
+<tr>
+<td class="org-left">midval<sub>07</sub></td>
+<td class="org-left">BOOLEAN</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Middle Market Cap Value membership</td>
+</tr>
+
+<tr>
+<td class="org-left">midgro<sub>07</sub></td>
+<td class="org-left">BOOLEAN</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Middle Market Cap Growth membership</td>
+</tr>
+
+<tr>
+<td class="org-left">sc600<sub>07</sub></td>
+<td class="org-left">BOOLEAN</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">S&amp;P Small Cap Membership</td>
+</tr>
+
+<tr>
+<td class="org-left">scval<sub>07</sub></td>
+<td class="org-left">BOOLEAN</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">S&amp;P Small Cap Value Membership</td>
+</tr>
+
+<tr>
+<td class="org-left">scgro<sub>07</sub></td>
+<td class="org-left">BOOLEAN</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">S&amp;P Small Cap Growth Membership</td>
+</tr>
+
+<tr>
+<td class="org-left">e3estu<sub>07</sub></td>
+<td class="org-left">BOOLEAN</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Barra Estimation Universe Membership</td>
+</tr>
+
+<tr>
+<td class="org-left">created<sub>on</sub></td>
+<td class="org-left">DATETIME</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">insert timestamp</td>
+</tr>
+
+<tr>
+<td class="org-left">updated<sub>on</sub></td>
+<td class="org-left">DATETIME</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">last update time</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-orgae9ff16" class="outline-3">
+<h3 id="orgae9ff16"><span class="section-number-3">2.2.</span> table<sub>barra</sub><sub>08</sub></h3>
+<div class="outline-text-3" id="text-2-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Column</th>
+<th scope="col" class="org-left">DTYPE</th>
+<th scope="col" class="org-left">Key</th>
+<th scope="col" class="org-left">Constraints</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">barrid<sub>08</sub></td>
+<td class="org-left">VARCHAR(11)</td>
+<td class="org-left">PKEY</td>
+<td class="org-left">NOT NULL</td>
+<td class="org-left">barra id</td>
+</tr>
+
+<tr>
+<td class="org-left">ticker<sub>08</sub></td>
+<td class="org-left">VARCHAR(9)</td>
+<td class="org-left">IDX</td>
+<td class="org-left">&nbsp;</td>
+<td class="org-left">stock ticker</td>
+</tr>
+
+<tr>
+<td class="org-left">cusip<sub>08</sub></td>
+<td class="org-left">VARCHAR(12)</td>
+<td class="org-left">IDX</td>
+<td class="org-left">UNIQUE, NOT NULL</td>
+<td class="org-left">unique instrument ID</td>
+</tr>
+
+<tr>
+<td class="org-left">name<sub>08</sub></td>
+<td class="org-left">VARCHAR(50)</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">name of stock</td>
+</tr>
+
+<tr>
+<td class="org-left">hbta<sub>08</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Historical Beta</td>
+</tr>
+
+<tr>
+<td class="org-left">beta<sub>08</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Predicted Beta</td>
+</tr>
+
+<tr>
+<td class="org-left">srisk<sub>pct</sub><sub>08</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Systematic Risk (%)</td>
+</tr>
+
+<tr>
+<td class="org-left">trisk<sub>pct</sub><sub>08</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Total Risk (%)</td>
+</tr>
+
+<tr>
+<td class="org-left">voltilty<sub>08</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Volatility Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">momentum<sub>08</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Momentum Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">size<sub>08</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Size Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">sizenonl<sub>08</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">SIze Non linearity [log] Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">tradeact<sub>08</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Trading Volume Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">growth<sub>08</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Growth Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">earnyld<sub>08</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Earnings Yield Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">value<sub>08</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Value Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">earnvar<sub>08</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Earnings Variability Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">leverage<sub>08</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Leverage Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">currsen<sub>08</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Currency Sensitivity Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">yield<sub>08</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Yield Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">nonestu<sub>08</sub></td>
+<td class="org-left">BOOLEAN</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">In estimation universe</td>
+</tr>
+
+<tr>
+<td class="org-left">indname1<sub>08</sub></td>
+<td class="org-left">VARCHAR(12)</td>
+<td class="org-left">Foreign Key</td>
+<td class="org-left">-</td>
+<td class="org-left">industry name, Mapped to table<sub>industry</sub><sub>to</sub><sub>sector.industry</sub></td>
+</tr>
+
+<tr>
+<td class="org-left">ind1<sub>08</sub></td>
+<td class="org-left">INTEGER</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">industry code</td>
+</tr>
+
+<tr>
+<td class="org-left">wgt1<sub>pct</sub><sub>08</sub></td>
+<td class="org-left">INTEGER</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">industry weight if operating in more than one industry</td>
+</tr>
+
+<tr>
+<td class="org-left">indname2<sub>08</sub></td>
+<td class="org-left">VARCHAR(12)</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">2nd industry name</td>
+</tr>
+
+<tr>
+<td class="org-left">ind2<sub>08</sub></td>
+<td class="org-left">INTEGER</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">2nd industry code</td>
+</tr>
+
+<tr>
+<td class="org-left">wgt2<sub>pct</sub><sub>08</sub></td>
+<td class="org-left">INTEGER</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">2nd industry weight</td>
+</tr>
+
+<tr>
+<td class="org-left">indname3<sub>08</sub></td>
+<td class="org-left">VARCHAR(12)</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">3rd industry name</td>
+</tr>
+
+<tr>
+<td class="org-left">ind3<sub>08</sub></td>
+<td class="org-left">INTEGER</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">3rd industry code</td>
+</tr>
+
+<tr>
+<td class="org-left">wgt3<sub>pct</sub><sub>08</sub></td>
+<td class="org-left">INTEGER</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">3rd industry weight</td>
+</tr>
+
+<tr>
+<td class="org-left">indname4<sub>08</sub></td>
+<td class="org-left">VARCHAR(12)</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">4th industry name</td>
+</tr>
+
+<tr>
+<td class="org-left">ind4<sub>08</sub></td>
+<td class="org-left">INTEGER</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">4th industry code</td>
+</tr>
+
+<tr>
+<td class="org-left">wgt4<sub>pct</sub><sub>08</sub></td>
+<td class="org-left">INTEGER</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">4th industry weight</td>
+</tr>
+
+<tr>
+<td class="org-left">indname5<sub>08</sub></td>
+<td class="org-left">VARCHAR(12)</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">5th industry name</td>
+</tr>
+
+<tr>
+<td class="org-left">ind5<sub>08</sub></td>
+<td class="org-left">INTEGER</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">5th industry code</td>
+</tr>
+
+<tr>
+<td class="org-left">wgt5<sub>pct</sub><sub>08</sub></td>
+<td class="org-left">INTEGER</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">5th industry weight</td>
+</tr>
+
+<tr>
+<td class="org-left">price<sub>08</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Stock Price</td>
+</tr>
+
+<tr>
+<td class="org-left">capitalization<sub>08</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Market Capitalization (Outstanding Shares * Price)</td>
+</tr>
+
+<tr>
+<td class="org-left">yld<sub>pct</sub><sub>08</sub></td>
+<td class="org-left">FLOAT</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Dividend Yield Factor</td>
+</tr>
+
+<tr>
+<td class="org-left">sap500<sub>08</sub></td>
+<td class="org-left">BOOLEAN</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">S&amp;P 500 Membership</td>
+</tr>
+
+<tr>
+<td class="org-left">sapval<sub>08</sub></td>
+<td class="org-left">BOOLEAN</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">S&amp;P Value Membership</td>
+</tr>
+
+<tr>
+<td class="org-left">sapgro<sub>08</sub></td>
+<td class="org-left">BOOLEAN</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">S&amp;P Growth Membership</td>
+</tr>
+
+<tr>
+<td class="org-left">midcap<sub>08</sub></td>
+<td class="org-left">BOOLEAN</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Middle Market Cap Value (~ 2BN - 10BN)</td>
+</tr>
+
+<tr>
+<td class="org-left">midval<sub>08</sub></td>
+<td class="org-left">BOOLEAN</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Middle Market Cap Value membership</td>
+</tr>
+
+<tr>
+<td class="org-left">midgro<sub>08</sub></td>
+<td class="org-left">BOOLEAN</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Middle Market Cap Growth membership</td>
+</tr>
+
+<tr>
+<td class="org-left">sc600<sub>08</sub></td>
+<td class="org-left">BOOLEAN</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">S&amp;P Small Cap Membership</td>
+</tr>
+
+<tr>
+<td class="org-left">scval<sub>08</sub></td>
+<td class="org-left">BOOLEAN</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">S&amp;P Small Cap Value Membership</td>
+</tr>
+
+<tr>
+<td class="org-left">scgro<sub>08</sub></td>
+<td class="org-left">BOOLEAN</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">S&amp;P Small Cap Growth Membership</td>
+</tr>
+
+<tr>
+<td class="org-left">e3estu<sub>08</sub></td>
+<td class="org-left">BOOLEAN</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">Barra Estimation Universe Membership</td>
+</tr>
+
+<tr>
+<td class="org-left">created<sub>on</sub></td>
+<td class="org-left">DATETIME</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">insert timestamp</td>
+</tr>
+
+<tr>
+<td class="org-left">updated<sub>on</sub></td>
+<td class="org-left">DATETIME</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">last update time</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org8081032" class="outline-3">
+<h3 id="org8081032"><span class="section-number-3">2.3.</span> table<sub>industry</sub><sub>to</sub><sub>sector</sub></h3>
+<div class="outline-text-3" id="text-2-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Column</th>
+<th scope="col" class="org-left">DTYPE</th>
+<th scope="col" class="org-left">Key</th>
+<th scope="col" class="org-left">Constraints</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">industry</td>
+<td class="org-left">VARCHAR(23)</td>
+<td class="org-left">PKEY</td>
+<td class="org-left">NOT NULL</td>
+<td class="org-left">industry name maps to indname1</td>
+</tr>
+
+<tr>
+<td class="org-left">sector</td>
+<td class="org-left">VARCHAR(23)</td>
+<td class="org-left">-</td>
+<td class="org-left">NOT NULL</td>
+<td class="org-left">sector</td>
+</tr>
+
+<tr>
+<td class="org-left">created<sub>on</sub></td>
+<td class="org-left">DATETIME,</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">row creation time</td>
+</tr>
+
+<tr>
+<td class="org-left">updated<sub>on</sub></td>
+<td class="org-left">DATETIME,</td>
+<td class="org-left">-</td>
+<td class="org-left">-</td>
+<td class="org-left">last updated time</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-org5eb8289" class="outline-2">
+<h2 id="org5eb8289"><span class="section-number-2">3.</span> Ingestion Lineage Log</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org6daceac" class="outline-3">
+<h3 id="org6daceac"><span class="section-number-3">3.1.</span> [1] Initial Load of Data</h3>
+<div class="outline-text-3" id="text-3-1">
+<ul class="org-ul">
+<li><b>NULL-HANDLING:</b> Converted sentinels (coded as -999) to pandas.nan</li>
+<li><b>Transformation:</b> cleaned all columns of leading/trailing whitespaces</li>
+<li><b>Transformation:</b> str.strip() on barrid</li>
+<li><b>Transformation:</b> replaced invalid chars (%: pct)</li>
+<li><b>Transformation:</b> str.lower() all columns</li>
+<li><b>UNIVERSE DROPS:</b> Dropped BUD ticker because due to merger was delisted, not for risk reasons</li>
+<li><b>UPDATE:</b> barra<sub>08.NWSA</sub> &ndash;&gt; barra<sub>08.NWS.A</sub> to match 2007 ticker post merger</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2026-04-17 Fri 00:00</p>
+<p class="author">Author: Edgar Huamantla</p>
+<p class="date">Created: 2026-04-17 Fri 09:45</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

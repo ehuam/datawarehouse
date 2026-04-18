@@ -133,7 +133,7 @@ Demonstrate these JOIN types with meaningful analysis:
 
 * ## Deliverables
 
-### 1. Code Notebook
+** ### 1. Code Notebook
 - Schema creation with column naming decisions
 - Index creation and EXPLAIN plan analysis
 - Transaction examples with Bear Stearns/Lehman scenarios
@@ -141,22 +141,22 @@ Demonstrate these JOIN types with meaningful analysis:
 - Risk factor statistical calculations in SQL
 - JOIN demonstrations with NULL handling
 
-### 2. Database Documentation
+** ### 2. Database Documentation
 - ERD showing all tables and relationships
 - Column naming convention and any modifications
 - Data type justifications
 - Handling of estimation universe filtering
 - NULL handling strategy
 
-### 3. Analysis Report
+** ### 3. Analysis Report
 - Executive summary of risk factor findings
 - Beta and risk measure recommendations
 - Sector impact analysis
 - Visualizations (using Python after SQL retrieval)
 - Performance metrics for different query approaches
 
-### 4. Presentation Video (10-15 minutes)
-** Live demonstration of:
+** ### 4. Presentation Video (10-15 minutes)
+Live demonstration of:
   - Transaction with Bear Stearns/Lehman scenario
   - Risk factor statistical calculations
   - JOIN operations showing survivor analysis
@@ -164,7 +164,7 @@ Demonstrate these JOIN types with meaningful analysis:
 - Key insights about predictive risk factors
 - Technical decisions and trade-offs
 
-### 5. Trello Board
+** ### 5. Trello Board
 - Task assignments and progress
 - Query development tracking
 - Testing and optimization notes

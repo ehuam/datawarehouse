@@ -1,0 +1,928 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2026-04-18 Sat 14:49 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Analysis Report</title>
+<meta name="author" content="Edgar Huamantla" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-c:before { content: 'C'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'JavaScript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Analysis Report</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org1a8e356">1. Beta and Risk Measure Recommendations</a>
+<ul>
+<li><a href="#org6a0bbdd">1.1. Historical Beta vs Beta</a>
+<ul>
+<li><a href="#org2e0192b">1.1.1. Historical Beta Prediction Ability by Sector</a></li>
+<li><a href="#orgae1d56e">1.1.2. Beta prediction ability by sector</a></li>
+</ul>
+</li>
+<li><a href="#org0656c03">1.2. Metric Performance</a>
+<ul>
+<li><a href="#orgabd8e00">1.2.1. BETA</a></li>
+<li><a href="#org430687f">1.2.2. HBETA</a></li>
+</ul>
+</li>
+<li><a href="#org376db88">1.3. HBETA VS BETA</a></li>
+</ul>
+</li>
+<li><a href="#org1ed3aea">2. Systematic Risk vs Total Risk</a>
+<ul>
+<li><a href="#org5f50575">2.1. Recommendation to Risk Team: Systematic Risk vs Total Risk</a></li>
+</ul>
+</li>
+<li><a href="#org21a15a9">3. Which Factors best predict percent change between 2007-2008</a></li>
+<li><a href="#org41e52e3">4. Which is faster? CTE VS SUBQUERY VS VIEW</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org1a8e356" class="outline-2">
+<h2 id="org1a8e356"><span class="section-number-2">1.</span> Beta and Risk Measure Recommendations</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org6a0bbdd" class="outline-3">
+<h3 id="org6a0bbdd"><span class="section-number-3">1.1.</span> Historical Beta vs Beta</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Historical Beta (HBETA) is a measure of the a company's return relative to the market using 60 months of prior data.
+Beta would measure a security's sensitivity to the market conditions.
+</p>
+
+<p>
+We looked to compare HBETA or BETA predictive abilities by sector.
+</p>
+</div>
+<div id="outline-container-org2e0192b" class="outline-4">
+<h4 id="org2e0192b"><span class="section-number-4">1.1.1.</span> Historical Beta Prediction Ability by Sector</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+We did this by plotting stock returns (2008 price less 2007 price over 2007 Price) by sectors to determine if there was
+a relationship.
+For the Technology and Communication sector, historical beta was able to capture the direction but the dispersion of the points
+suggests it wasn't able to capture precisely the return. The companies with higher historical beta than the average did experience
+negative stock return in general. 
+For the financial sector, historical beta had even more dispersion. Stocks with a higher beta generally did have negative return but
+those with lower historical beta closer to the market (~.6) was a coin flip.
+Energy stocks with a HBETA .8 std deviation units above the market, had a higher return.
+The transport industry had 1 std deviation unit of beta above the market as a whole and had a -22% return.
+Basic Materials, historical beta captured the direction and was able to explain the stock return. The points were on the line.
+Healthcare, historical beta was able to capture the general direction with stocks that had .5 std deviations unit higher than the market
+but also had more dispersion.
+For industrials, historical beta was able to capture the direction and the points were closer to the line for stocks with a historical beta
+one unit higher than the market.
+Consumer staples, historical beta was able to predict the negative relationship between .4 units and .9. Stocks with a .94 historical beta
+could not be used as a good estimate of how much the underperformance would be.
+Consumer discretionary stocks with a hbeta between .4 and 1.3 units captured the negative relationshp. Stocks outside those bounds outperformed
+the market.
+Real esate and utilities was similar to the transportation sector, clustering around .5 hbeta. The sector had -31% stock return.
+</p>
+
+<p>
+This suggests that the real estate and transport sectors could be used as reference points to other indusry performance.
+Together they both sit on opposite ends of historical beta, real estate having a .457 units compared to the market and transport having near 1
+unit above the market (.991). As reference points they can be used to determine how other stocks with similar historical beta performed.
+When looking at financial sectors we see stocks with a lower historical beta, .53 performed like the real estate sector but then it wasn't
+able to predict whether a stock's performance after that.
+</p>
+</div>
+</div>
+<div id="outline-container-orgae1d56e" class="outline-4">
+<h4 id="orgae1d56e"><span class="section-number-4">1.1.2.</span> Beta prediction ability by sector</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<p>
+Tech communication industry Beta was able to better explain a stocks performance with the data points closer to the regression line, with the exception
+of those companies that had 1 beta unit, there were vertical points where it could have gone either way.
+FInancial sector performance was better explained with beta less than .75 and greater than 1.7. In between those, stocks could have gone in either direction
+with returns between 0% and -65%.
+The energy sector, beta was .88 could be used to explain a positive performance.
+The Basics Materials sectors behaved the same with historical and beta. Its performance could be explained by both.
+The healthcare sector beta better explained the stock's return and captured the direction between .6 and .9. Outside of that range, stocks could go either way.
+Industrial sector was well explained by the beta measure, having captured the relationship and having less dispersion.
+For consumer staples, beta didn't do anything to predict the direction or performance of a stocks return.
+For consumer discre, stocks with a beta higher than .8 it had predictive power. at .8 a stock could have gone either way.
+</p>
+
+<p>
+What we see is stocks with 1 beta unit, it could have gone either way for all sectors as they are clustering vertically.
+However its important to note that basic material sectors behaved in line with both historical beta and beta. There wasn't much dispersion as compared to
+other sectors.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org0656c03" class="outline-3">
+<h3 id="org0656c03"><span class="section-number-3">1.2.</span> Metric Performance</h3>
+<div class="outline-text-3" id="text-1-2">
+</div>
+<div id="outline-container-orgabd8e00" class="outline-4">
+<h4 id="orgabd8e00"><span class="section-number-4">1.2.1.</span> BETA</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<p>
+<span class="underline">main_</span> - 2026-04-18 11:11:04,894 - INFO - Skipping BASIC<sub>MAT</sub>: cannot compute beta model (only 2 rows, need &gt;= 5).
+<span class="underline"><span class="underline">main</span></span> - 2026-04-18 11:11:04,903 - INFO - Skipping REALESTATE<sub>UTIL</sub>: cannot compute beta model (only 1 rows, need &gt;= 5).
+<span class="underline"><span class="underline">main</span></span> - 2026-04-18 11:11:04,905 - INFO - Skipping TRANSPORT: cannot compute beta model (only 1 rows, need &gt;= 5).
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Sector</th>
+<th scope="col" class="org-right">R-Squared</th>
+<th scope="col" class="org-right">RMSE</th>
+<th scope="col" class="org-right">P-Value</th>
+<th scope="col" class="org-right">N</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">FINANCIAL</td>
+<td class="org-right">0.3546</td>
+<td class="org-right">0.2019</td>
+<td class="org-right">0.0693</td>
+<td class="org-right">10</td>
+</tr>
+
+<tr>
+<td class="org-left">HEALTHCARE</td>
+<td class="org-right">0.1575</td>
+<td class="org-right">0.2312</td>
+<td class="org-right">0.1600</td>
+<td class="org-right">14</td>
+</tr>
+
+<tr>
+<td class="org-left">TECH<sub>COMM</sub></td>
+<td class="org-right">0.1463</td>
+<td class="org-right">0.1480</td>
+<td class="org-right">0.1771</td>
+<td class="org-right">14</td>
+</tr>
+
+<tr>
+<td class="org-left">CONS<sub>DISCR</sub></td>
+<td class="org-right">0.2173</td>
+<td class="org-right">0.2134</td>
+<td class="org-right">0.3514</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">ENERGY</td>
+<td class="org-right">0.1140</td>
+<td class="org-right">0.1488</td>
+<td class="org-right">0.4590</td>
+<td class="org-right">7</td>
+</tr>
+
+<tr>
+<td class="org-left">INDUSTRIAL</td>
+<td class="org-right">0.0829</td>
+<td class="org-right">0.1323</td>
+<td class="org-right">0.5311</td>
+<td class="org-right">7</td>
+</tr>
+
+<tr>
+<td class="org-left">CONS<sub>STAPLES</sub></td>
+<td class="org-right">0.0011</td>
+<td class="org-right">0.2827</td>
+<td class="org-right">0.9509</td>
+<td class="org-right">6</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org430687f" class="outline-4">
+<h4 id="org430687f"><span class="section-number-4">1.2.2.</span> HBETA</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<p>
+<span class="underline"><span class="underline">main</span></span> - 2026-04-18 11:10:45,634 - INFO - Skipping BASIC<sub>MAT</sub>: cannot compute historical<sub>beta</sub> model (only 2 rows, need &gt;= 5).
+<span class="underline"><span class="underline">main</span></span> - 2026-04-18 11:10:45,644 - INFO - Skipping REALESTATE<sub>UTIL</sub>: cannot compute historical<sub>beta</sub> model (only 1 rows, need &gt;= 5).
+<span class="underline"><span class="underline">main</span></span> - 2026-04-18 11:10:45,646 - INFO - Skipping TRANSPORT: cannot compute historical<sub>beta</sub> model (only 1 rows, need &gt;= 5).
+</p>
+
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Sector</th>
+<th scope="col" class="org-right">R-Squared</th>
+<th scope="col" class="org-right">RMSE</th>
+<th scope="col" class="org-right">P-Value</th>
+<th scope="col" class="org-right">N</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">HEALTHCARE</td>
+<td class="org-right">0.2630</td>
+<td class="org-right">0.2162</td>
+<td class="org-right">0.0608</td>
+<td class="org-right">14</td>
+</tr>
+
+<tr>
+<td class="org-left">TECH<sub>COMM</sub></td>
+<td class="org-right">0.2137</td>
+<td class="org-right">0.1421</td>
+<td class="org-right">0.0961</td>
+<td class="org-right">14</td>
+</tr>
+
+<tr>
+<td class="org-left">CONS<sub>STAPLES</sub></td>
+<td class="org-right">0.3135</td>
+<td class="org-right">0.2343</td>
+<td class="org-right">0.2479</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">INDUSTRIAL</td>
+<td class="org-right">0.1902</td>
+<td class="org-right">0.1244</td>
+<td class="org-right">0.3280</td>
+<td class="org-right">7</td>
+</tr>
+
+<tr>
+<td class="org-left">FINANCIAL</td>
+<td class="org-right">0.0859</td>
+<td class="org-right">0.2402</td>
+<td class="org-right">0.4111</td>
+<td class="org-right">10</td>
+</tr>
+
+<tr>
+<td class="org-left">ENERGY</td>
+<td class="org-right">0.0700</td>
+<td class="org-right">0.1525</td>
+<td class="org-right">0.5664</td>
+<td class="org-right">7</td>
+</tr>
+
+<tr>
+<td class="org-left">CONS<sub>DISCR</sub></td>
+<td class="org-right">0.0132</td>
+<td class="org-right">0.2397</td>
+<td class="org-right">0.8283</td>
+<td class="org-right">6</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-org376db88" class="outline-3">
+<h3 id="org376db88"><span class="section-number-3">1.3.</span> HBETA VS BETA</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+The answer to which beta measure the risk management to use, would be neither of the two.
+When we view the explanation power of the regression line offered by both, they don't provide enough evidence, statistically speaking,
+to say that the result wasn't a fluke. If we had looked at the results without breaking it down by sector, we would have said that beta
+was a better predictor, but even then beta was only able to explain 10% of the variation.
+</p>
+
+<p>
+Risk Metric Performance (2008 Crisis):
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Measure</th>
+<th scope="col" class="org-right">R-Squared</th>
+<th scope="col" class="org-right">RMSE</th>
+<th scope="col" class="org-right">P-Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Beta</td>
+<td class="org-right">0.1053</td>
+<td class="org-right">0.2000</td>
+<td class="org-right">0.0069</td>
+</tr>
+
+<tr>
+<td class="org-left">HBeta</td>
+<td class="org-right">0.0377</td>
+<td class="org-right">0.2074</td>
+<td class="org-right">0.1127</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-org1ed3aea" class="outline-2">
+<h2 id="org1ed3aea"><span class="section-number-2">2.</span> Systematic Risk vs Total Risk</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Total risk is the decomposition into common factors with the remaining sources of risk being specific to that industry/stock.
+Total risk can be thought of as the difference between a risk free rate, such as treasure rates, and everything else.
+Systematic risk is a further decomposition of  what can be attributed to the market/benchmark or factor movements that
+cannot be diversified away. They reflect different perspectives on portfolio management.
+</p>
+
+<p>
+Total risk looks to see how much risk is coming from broad trends, the factors, and how much comes from individual stocks.
+It's purpose is to view volatility as a whole and does not care about benchmarks.
+Systematic-Residual risk looks to see how much of the movement in price in terms of the market. It looks to view the sensitivity of
+stocks to the economy&ndash;beta.
+</p>
+</div>
+<div id="outline-container-org5f50575" class="outline-3">
+<h3 id="org5f50575"><span class="section-number-3">2.1.</span> Recommendation to Risk Team: Systematic Risk vs Total Risk</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+As a whole, neither Systematic Risk and Total Risk had statistically significant predictive power.
+</p>
+
+<p>
+Risk Metric Performance vs Realized Return:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&nbsp;</th>
+<th scope="col" class="org-left">R-Squared</th>
+<th scope="col" class="org-right">RMSE</th>
+<th scope="col" class="org-right">P-Value</th>
+<th scope="col" class="org-right">&nbsp;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Total</td>
+<td class="org-left">Risk</td>
+<td class="org-right">0.0247</td>
+<td class="org-right">0.2088</td>
+<td class="org-right">0.2009</td>
+</tr>
+
+<tr>
+<td class="org-left">Systematic</td>
+<td class="org-left">Risk</td>
+<td class="org-right">0.0000</td>
+<td class="org-right">0.2114</td>
+<td class="org-right">0.99</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>
+Per sector, Total risk was able to explain the variations of stock returns for Consumer Staples and the Financial sector,
+71% R<sup>2</sup> and 42% R<sup>2</sup>.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Sector</th>
+<th scope="col" class="org-right">R-Squared</th>
+<th scope="col" class="org-right">RMSE</th>
+<th scope="col" class="org-right">P-Value</th>
+<th scope="col" class="org-right">N</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">CONS<sub>STAPLES</sub></td>
+<td class="org-right">0.7159</td>
+<td class="org-right">0.1508</td>
+<td class="org-right">0.0337</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">FINANCIAL</td>
+<td class="org-right">0.4204</td>
+<td class="org-right">0.1913</td>
+<td class="org-right">0.0426</td>
+<td class="org-right">10</td>
+</tr>
+
+<tr>
+<td class="org-left">TECH<sub>COMM</sub></td>
+<td class="org-right">0.2176</td>
+<td class="org-right">0.1417</td>
+<td class="org-right">0.0927</td>
+<td class="org-right">14</td>
+</tr>
+
+<tr>
+<td class="org-left">CONS<sub>DISCR</sub></td>
+<td class="org-right">0.4399</td>
+<td class="org-right">0.1806</td>
+<td class="org-right">0.1510</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">HEALTHCARE</td>
+<td class="org-right">0.1582</td>
+<td class="org-right">0.2311</td>
+<td class="org-right">0.1591</td>
+<td class="org-right">14</td>
+</tr>
+
+<tr>
+<td class="org-left">ENERGY</td>
+<td class="org-right">0.3239</td>
+<td class="org-right">0.1300</td>
+<td class="org-right">0.1823</td>
+<td class="org-right">7</td>
+</tr>
+
+<tr>
+<td class="org-left">INDUSTRIAL</td>
+<td class="org-right">0.0002</td>
+<td class="org-right">0.1382</td>
+<td class="org-right">0.9756</td>
+<td class="org-right">7</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Systematic Risk was able to explain 72% of the variations of stocks returns for Consumer Discretionary sector but had little
+predictive value for the other sectors.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Sector</th>
+<th scope="col" class="org-right">R-Squared</th>
+<th scope="col" class="org-right">RMSE</th>
+<th scope="col" class="org-right">P-Value</th>
+<th scope="col" class="org-right">N</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">CONS<sub>DISCR</sub></td>
+<td class="org-right">0.7245</td>
+<td class="org-right">0.1266</td>
+<td class="org-right">0.0316</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">FINANCIAL</td>
+<td class="org-right">0.3982</td>
+<td class="org-right">0.1949</td>
+<td class="org-right">0.0504</td>
+<td class="org-right">10</td>
+</tr>
+
+<tr>
+<td class="org-left">TECH<sub>COMM</sub></td>
+<td class="org-right">0.1675</td>
+<td class="org-right">0.1462</td>
+<td class="org-right">0.1462</td>
+<td class="org-right">14</td>
+</tr>
+
+<tr>
+<td class="org-left">HEALTHCARE</td>
+<td class="org-right">0.1113</td>
+<td class="org-right">0.2374</td>
+<td class="org-right">0.2437</td>
+<td class="org-right">14</td>
+</tr>
+
+<tr>
+<td class="org-left">CONS<sub>STAPLES</sub></td>
+<td class="org-right">0.0380</td>
+<td class="org-right">0.2774</td>
+<td class="org-right">0.7114</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-left">INDUSTRIAL</td>
+<td class="org-right">0.0284</td>
+<td class="org-right">0.1362</td>
+<td class="org-right">0.7177</td>
+<td class="org-right">7</td>
+</tr>
+
+<tr>
+<td class="org-left">ENERGY</td>
+<td class="org-right">0.0056</td>
+<td class="org-right">0.1577</td>
+<td class="org-right">0.8730</td>
+<td class="org-right">7</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Based on our results, we would suggest the risk management use total risk only for the consumer staple and financial sectors.
+While using the systematic risk measure for Consumer Discretionary stocks only.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org21a15a9" class="outline-2">
+<h2 id="org21a15a9"><span class="section-number-2">3.</span> Which Factors best predict percent change between 2007-2008</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+What we sought to do at first was to review our given values. We knew that they were normalized but Barra traditionally normalized
+based on S&amp;P500 membership. So we sought to test this out.  Our results showed that the factor values were instead normalized by
+the Barra estimation universe, having a Standard Deviation of 1, with their relative influence determined by their capitalization.
+</p>
+
+<p>
+What we sought to do was to replicate Rosenberg and Marath's claim that our regression lines would be improved with the addition
+of technical and fundamental factors over using strictly historical performance &ndash; the Bayesian baseline. What the results would tell
+us is if these claims held during the financial crisis. Rosengberg and Marath found that using factors that came from market
+observations (technical factors) they would get a 57% improvement in predictive power. Using only information from a company's
+financial statements, they would see a 45% improvement. However, they saw that a combination of both helped explain variance by 85%
+over just using historical price movement.
+</p>
+
+<p>
+The stocks we reviewed were those in the Barra Estimation universe and with a size factor greater than 0. This left us with 97 stocks.
+We wanted to do an analysis by sectors but because of small membership we had to group them into 'super-sectors'. The super-sector we
+left out was "Healthcare and Staples" purely because of economic intuition. We felt this was a defensive sector and could be used
+as a reference point.
+</p>
+
+<p>
+Of the factors, trading activity was the best predictor of future pricing. The other factors did not show statistical significance.
+The factors were distinct enough from each other given by our condition number of being under 30 &ndash; we had a value of 9 indicating
+there wasn't a strong multi-collinearity effect between the factors.
+</p>
+
+<p>
+What our results showed that the Rossenberg and Mareth's claim did not during the financial crisis. Fundamentals and Technicals
+performed slightly worse than using market information alone.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">&nbsp;</th>
+<th scope="col" class="org-left">Model Name</th>
+<th scope="col" class="org-right">R-Squared</th>
+<th scope="col" class="org-right">Adj. R-Squared</th>
+<th scope="col" class="org-right">AIC</th>
+<th scope="col" class="org-right">Prob (F-statistic)</th>
+<th scope="col" class="org-right">% Imp vs Baseline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">0</td>
+<td class="org-left">Baseline</td>
+<td class="org-right">0.2980</td>
+<td class="org-right">0.2594</td>
+<td class="org-right">-5.1265</td>
+<td class="org-right">4.3100e-06</td>
+<td class="org-right">0.0000</td>
+</tr>
+
+<tr>
+<td class="org-right">1</td>
+<td class="org-left">Approach A - Technicals</td>
+<td class="org-right">0.4334</td>
+<td class="org-right">0.3819</td>
+<td class="org-right">-19.9228</td>
+<td class="org-right">2.0056e-08</td>
+<td class="org-right">47.2443</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-left">Approach B - Fundamentals</td>
+<td class="org-right">0.3716</td>
+<td class="org-right">0.3144</td>
+<td class="org-right">-9.8709</td>
+<td class="org-right">1.2395e-06</td>
+<td class="org-right">21.2257</td>
+</tr>
+
+<tr>
+<td class="org-right">3</td>
+<td class="org-left">Approach C - FUNDAMENTALS + TECHNICALS</td>
+<td class="org-right">0.4485</td>
+<td class="org-right">0.3771</td>
+<td class="org-right">-16.5342</td>
+<td class="org-right">1.7259e-07</td>
+<td class="org-right">45.3870</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org41e52e3" class="outline-2">
+<h2 id="org41e52e3"><span class="section-number-2">4.</span> Which is faster? CTE VS SUBQUERY VS VIEW</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Our results showed that on average, they all performed the same. Which was more an indication of the SQL optimizing engine's
+performance. We ran a sql statement fetching this data using the three methods 50 times and on average they were about the same.
+The View was the 'winner' but it offered the least flexibility to a user.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2026-04-18 Sat 00:00</p>
+<p class="author">Author: Edgar Huamantla</p>
+<p class="date">Created: 2026-04-18 Sat 14:49</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

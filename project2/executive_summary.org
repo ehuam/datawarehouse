@@ -1,0 +1,201 @@
+#+Title: Analysis Report
+#+Author: Edgar Huamantla
+#+Date: <2026-04-18 Sat>
+
+* Beta and Risk Measure Recommendations
+
+** Historical Beta vs Beta
+Historical Beta (HBETA) is a measure of the a company's return relative to the market using 60 months of prior data.
+Beta would measure a security's sensitivity to the market conditions.
+
+We looked to compare HBETA or BETA predictive abilities by sector.
+
+*** Historical Beta Prediction Ability by Sector
+We did this by plotting stock returns (2008 price less 2007 price over 2007 Price) by sectors to determine if there was
+a relationship.
+For the Technology and Communication sector, historical beta was able to capture the direction but the dispersion of the points
+suggests it wasn't able to capture precisely the return. The companies with higher historical beta than the average did experience
+negative stock return in general. 
+For the financial sector, historical beta had even more dispersion. Stocks with a higher beta generally did have negative return but
+those with lower historical beta closer to the market (~.6) was a coin flip.
+Energy stocks with a HBETA .8 std deviation units above the market, had a higher return.
+The transport industry had 1 std deviation unit of beta above the market as a whole and had a -22% return.
+Basic Materials, historical beta captured the direction and was able to explain the stock return. The points were on the line.
+Healthcare, historical beta was able to capture the general direction with stocks that had .5 std deviations unit higher than the market
+but also had more dispersion.
+For industrials, historical beta was able to capture the direction and the points were closer to the line for stocks with a historical beta
+one unit higher than the market.
+Consumer staples, historical beta was able to predict the negative relationship between .4 units and .9. Stocks with a .94 historical beta
+could not be used as a good estimate of how much the underperformance would be.
+Consumer discretionary stocks with a hbeta between .4 and 1.3 units captured the negative relationshp. Stocks outside those bounds outperformed
+the market.
+Real esate and utilities was similar to the transportation sector, clustering around .5 hbeta. The sector had -31% stock return.
+
+This suggests that the real estate and transport sectors could be used as reference points to other indusry performance.
+Together they both sit on opposite ends of historical beta, real estate having a .457 units compared to the market and transport having near 1
+unit above the market (.991). As reference points they can be used to determine how other stocks with similar historical beta performed.
+When looking at financial sectors we see stocks with a lower historical beta, .53 performed like the real estate sector but then it wasn't
+able to predict whether a stock's performance after that.
+
+*** Beta prediction ability by sector
+Tech communication industry Beta was able to better explain a stocks performance with the data points closer to the regression line, with the exception
+of those companies that had 1 beta unit, there were vertical points where it could have gone either way.
+FInancial sector performance was better explained with beta less than .75 and greater than 1.7. In between those, stocks could have gone in either direction
+with returns between 0% and -65%.
+The energy sector, beta was .88 could be used to explain a positive performance.
+The Basics Materials sectors behaved the same with historical and beta. Its performance could be explained by both.
+The healthcare sector beta better explained the stock's return and captured the direction between .6 and .9. Outside of that range, stocks could go either way.
+Industrial sector was well explained by the beta measure, having captured the relationship and having less dispersion.
+For consumer staples, beta didn't do anything to predict the direction or performance of a stocks return.
+For consumer discre, stocks with a beta higher than .8 it had predictive power. at .8 a stock could have gone either way.
+
+What we see is stocks with 1 beta unit, it could have gone either way for all sectors as they are clustering vertically.
+However its important to note that basic material sectors behaved in line with both historical beta and beta. There wasn't much dispersion as compared to
+other sectors.
+
+** Metric Performance
+
+*** BETA
+_main__ - 2026-04-18 11:11:04,894 - INFO - Skipping BASIC_MAT: cannot compute beta model (only 2 rows, need >= 5).
+__main__ - 2026-04-18 11:11:04,903 - INFO - Skipping REALESTATE_UTIL: cannot compute beta model (only 1 rows, need >= 5).
+__main__ - 2026-04-18 11:11:04,905 - INFO - Skipping TRANSPORT: cannot compute beta model (only 1 rows, need >= 5).
+
+|--------------+-----------+--------+---------+----|
+| Sector       | R-Squared |   RMSE | P-Value |  N |
+|--------------+-----------+--------+---------+----|
+| FINANCIAL    |    0.3546 | 0.2019 |  0.0693 | 10 |
+| HEALTHCARE   |    0.1575 | 0.2312 |  0.1600 | 14 |
+| TECH_COMM    |    0.1463 | 0.1480 |  0.1771 | 14 |
+| CONS_DISCR   |    0.2173 | 0.2134 |  0.3514 |  6 |
+| ENERGY       |    0.1140 | 0.1488 |  0.4590 |  7 |
+| INDUSTRIAL   |    0.0829 | 0.1323 |  0.5311 |  7 |
+| CONS_STAPLES |    0.0011 | 0.2827 |  0.9509 |  6 |
+
+
+*** HBETA
+__main__ - 2026-04-18 11:10:45,634 - INFO - Skipping BASIC_MAT: cannot compute historical_beta model (only 2 rows, need >= 5).
+__main__ - 2026-04-18 11:10:45,644 - INFO - Skipping REALESTATE_UTIL: cannot compute historical_beta model (only 1 rows, need >= 5).
+__main__ - 2026-04-18 11:10:45,646 - INFO - Skipping TRANSPORT: cannot compute historical_beta model (only 1 rows, need >= 5).
+
+
+|--------------+-----------+--------+---------+----|
+| Sector       | R-Squared |   RMSE | P-Value |  N |
+|--------------+-----------+--------+---------+----|
+| HEALTHCARE   |    0.2630 | 0.2162 |  0.0608 | 14 |
+| TECH_COMM    |    0.2137 | 0.1421 |  0.0961 | 14 |
+| CONS_STAPLES |    0.3135 | 0.2343 |  0.2479 |  6 |
+| INDUSTRIAL   |    0.1902 | 0.1244 |  0.3280 |  7 |
+| FINANCIAL    |    0.0859 | 0.2402 |  0.4111 | 10 |
+| ENERGY       |    0.0700 | 0.1525 |  0.5664 |  7 |
+| CONS_DISCR   |    0.0132 | 0.2397 |  0.8283 |  6 |
+
+** HBETA VS BETA
+
+The answer to which beta measure the risk management to use, would be neither of the two.
+When we view the explanation power of the regression line offered by both, they don't provide enough evidence, statistically speaking,
+to say that the result wasn't a fluke. If we had looked at the results without breaking it down by sector, we would have said that beta
+was a better predictor, but even then beta was only able to explain 10% of the variation.
+
+Risk Metric Performance (2008 Crisis):
+
+| Measure | R-Squared |   RMSE | P-Value |
+|---------+-----------+--------+---------|
+| Beta    |    0.1053 | 0.2000 |  0.0069 |
+| HBeta   |    0.0377 | 0.2074 |  0.1127 |
+
+
+* Systematic Risk vs Total Risk
+Total risk is the decomposition into common factors with the remaining sources of risk being specific to that industry/stock.
+Total risk can be thought of as the difference between a risk free rate, such as treasure rates, and everything else.
+Systematic risk is a further decomposition of  what can be attributed to the market/benchmark or factor movements that
+cannot be diversified away. They reflect different perspectives on portfolio management.
+
+Total risk looks to see how much risk is coming from broad trends, the factors, and how much comes from individual stocks.
+It's purpose is to view volatility as a whole and does not care about benchmarks.
+Systematic-Residual risk looks to see how much of the movement in price in terms of the market. It looks to view the sensitivity of
+stocks to the economy--beta.
+
+** Recommendation to Risk Team: Systematic Risk vs Total Risk
+As a whole, neither Systematic Risk and Total Risk had statistically significant predictive power.
+
+Risk Metric Performance vs Realized Return:
+
+|------------+-----------+--------+---------+--------|
+|            | R-Squared |   RMSE | P-Value |        |
+|------------+-----------+--------+---------+--------|
+| Total      | Risk      | 0.0247 |  0.2088 | 0.2009 |
+| Systematic | Risk      | 0.0000 |  0.2114 |   0.99 |
+|------------+-----------+--------+---------+--------|
+
+
+Per sector, Total risk was able to explain the variations of stock returns for Consumer Staples and the Financial sector,
+71% R^2 and 42% R^2.
+
+|--------------+-----------+--------+---------+----|
+| Sector       | R-Squared |   RMSE | P-Value |  N |
+|--------------+-----------+--------+---------+----|
+| CONS_STAPLES |    0.7159 | 0.1508 |  0.0337 |  6 |
+| FINANCIAL    |    0.4204 | 0.1913 |  0.0426 | 10 |
+| TECH_COMM    |    0.2176 | 0.1417 |  0.0927 | 14 |
+| CONS_DISCR   |    0.4399 | 0.1806 |  0.1510 |  6 |
+| HEALTHCARE   |    0.1582 | 0.2311 |  0.1591 | 14 |
+| ENERGY       |    0.3239 | 0.1300 |  0.1823 |  7 |
+| INDUSTRIAL   |    0.0002 | 0.1382 |  0.9756 |  7 |
+|--------------+-----------+--------+---------+----|
+
+Systematic Risk was able to explain 72% of the variations of stocks returns for Consumer Discretionary sector but had little
+predictive value for the other sectors.
+
+|--------------+-----------+--------+---------+----|
+| Sector       | R-Squared |   RMSE | P-Value |  N |
+|--------------+-----------+--------+---------+----|
+| CONS_DISCR   |    0.7245 | 0.1266 |  0.0316 |  6 |
+| FINANCIAL    |    0.3982 | 0.1949 |  0.0504 | 10 |
+| TECH_COMM    |    0.1675 | 0.1462 |  0.1462 | 14 |
+| HEALTHCARE   |    0.1113 | 0.2374 |  0.2437 | 14 |
+| CONS_STAPLES |    0.0380 | 0.2774 |  0.7114 |  6 |
+| INDUSTRIAL   |    0.0284 | 0.1362 |  0.7177 |  7 |
+| ENERGY       |    0.0056 | 0.1577 |  0.8730 |  7 |
+|--------------+-----------+--------+---------+----|
+
+Based on our results, we would suggest the risk management use total risk only for the consumer staple and financial sectors.
+While using the systematic risk measure for Consumer Discretionary stocks only.
+
+* Which Factors best predict percent change between 2007-2008
+What we sought to do at first was to review our given values. We knew that they were normalized but Barra traditionally normalized
+based on S&P500 membership. So we sought to test this out.  Our results showed that the factor values were instead normalized by
+the Barra estimation universe, having a Standard Deviation of 1, with their relative influence determined by their capitalization.
+
+What we sought to do was to replicate Rosenberg and Marath's claim that our regression lines would be improved with the addition
+of technical and fundamental factors over using strictly historical performance -- the Bayesian baseline. What the results would tell
+us is if these claims held during the financial crisis. Rosengberg and Marath found that using factors that came from market
+observations (technical factors) they would get a 57% improvement in predictive power. Using only information from a company's
+financial statements, they would see a 45% improvement. However, they saw that a combination of both helped explain variance by 85%
+over just using historical price movement.
+
+The stocks we reviewed were those in the Barra Estimation universe and with a size factor greater than 0. This left us with 97 stocks.
+We wanted to do an analysis by sectors but because of small membership we had to group them into 'super-sectors'. The super-sector we
+left out was "Healthcare and Staples" purely because of economic intuition. We felt this was a defensive sector and could be used
+as a reference point.
+
+Of the factors, trading activity was the best predictor of future pricing. The other factors did not show statistical significance.
+The factors were distinct enough from each other given by our condition number of being under 30 -- we had a value of 9 indicating
+there wasn't a strong multi-collinearity effect between the factors.
+
+What our results showed that the Rossenberg and Mareth's claim did not during the financial crisis. Fundamentals and Technicals
+performed slightly worse than using market information alone.
+
+|---+----------------------------------------+-----------+----------------+----------+--------------------+-------------------|
+|   | Model Name                             | R-Squared | Adj. R-Squared |      AIC | Prob (F-statistic) | % Imp vs Baseline |
+|---+----------------------------------------+-----------+----------------+----------+--------------------+-------------------|
+| 0 | Baseline                               |    0.2980 |         0.2594 |  -5.1265 |         4.3100e-06 |            0.0000 |
+| 1 | Approach A - Technicals                |    0.4334 |         0.3819 | -19.9228 |         2.0056e-08 |           47.2443 |
+| 2 | Approach B - Fundamentals              |    0.3716 |         0.3144 |  -9.8709 |         1.2395e-06 |           21.2257 |
+| 3 | Approach C - FUNDAMENTALS + TECHNICALS |    0.4485 |         0.3771 | -16.5342 |         1.7259e-07 |           45.3870 |
+|---+----------------------------------------+-----------+----------------+----------+--------------------+-------------------|
+
+* Which is faster? CTE VS SUBQUERY VS VIEW
+
+Our results showed that on average, they all performed the same. Which was more an indication of the SQL optimizing engine's
+performance. We ran a sql statement fetching this data using the three methods 50 times and on average they were about the same.
+The View was the 'winner' but it offered the least flexibility to a user.

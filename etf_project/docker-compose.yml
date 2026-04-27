@@ -1,0 +1,10 @@
+services:
+        mongodb:
+                # using a 7.0 instead of 'latest'
+                image: mongo:7.0
+                env_file:
+                        - ENV_PUBLIC
+                ports:
+                        - "27017:27017"
+                volumes:
+                        - ./data/db:data/db

@@ -1,0 +1,19 @@
+# PROJECT CONFIGURATION
+# ====================
+# WARNING: DO NOT STORE CREDENTIALS IN A PROD ENV
+# THIS IS FOR ACADEMIC PURPOSES.
+# NORMALLY THIS WOULD BE A .ENV
+
+# =========
+# APP CONFIG
+# =========
+MONGO_HOST=localhost
+MONGO_PORT=27017
+MONGO_DB_NAME=etf_recommender
+
+# ======================================================
+# MONGO INTERNALS (used by docker to init the db)
+# ======================================================
+MONGO_INITDB_ROOT_USERNAME=edgar_admin
+MONGO_INITDB_ROOT_PASSWORD=secret_password
+MONGO_INITDB_DATABASE=etf_recommender

@@ -217,3 +217,4 @@ __marimo__/
 #user files
 *.db
 *.idea/
+**/*puppeteer*

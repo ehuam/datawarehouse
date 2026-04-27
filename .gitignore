@@ -218,3 +218,6 @@ __marimo__/
 *.db
 *.idea/
 **/*puppeteer*
+
+#db files
+data/db/

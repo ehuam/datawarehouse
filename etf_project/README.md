@@ -11,5 +11,9 @@ ignored in a git repo and NEVER uploaded.
  - if using COLIMA: run colima start --cpu 2 --memory 4
 
 2. Initialize the database
+- run the following
+```bash
+docker compose --env-file ENV_PUBLIC up -d 
+```
 3. Run the notebook:
 - The notebook is configured to connect to the database using the ENV_PUBLIC variables. If you have changed the .env file, make sure to update the notebook connection string accordingly.

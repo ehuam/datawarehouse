@@ -27,15 +27,14 @@ def extract_node_data(node:Tag, head_length:int=10, boxover_pattern:str=None) ->
     extract metadata from a single HTML tag.
     """
     raw_text = node.get_text(strip=True)
-    head_text = raw_text[:head_length] if raw_text else ""
 
     node_data_dict = {
         "tag": node.name,
         "id": node.get('id', ''),
         "classes": ".".join(node.get('class', [])),
-        "href": node.get('href', ''),
-        "content_head": head_text,
-        "full_label": f"<{node.name}> class:{node.get('class', '')}"
+        "href": node.get('href'),
+        "content_head": raw_text[:head_length] if raw_text else None,
+        "full_label": f"<{node.name}> class:{node.get('class', '')}",
     }
 
     match_value = node.get(boxover_pattern) if boxover_pattern else None
@@ -43,7 +42,9 @@ def extract_node_data(node:Tag, head_length:int=10, boxover_pattern:str=None) ->
     if match_value:
         node_data_dict["boxover_match"] = match_value
 
-    return node_data_dict
+    no_empty_kv_pairs = {k: v for k,v in node_data_dict.items() if v}
+        
+    return no_empty_kv_pairs
 
 
 def build_tree_data(

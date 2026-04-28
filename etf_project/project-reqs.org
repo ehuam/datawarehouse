@@ -1,0 +1,28 @@
+#+TITLE: ETF Recommender
+#+AUTHOR: Edgar Huamantla
+#+DATE: <2026-04-27 Mon>
+#+FILETAGS: :project3:etf:recommender:mongodb:documentation:
+
+* PROJECT REQUIREMENTS:
+
+* Part 1: ETF Master Collection — Building the Universe of ETFs
+Objective:
+Create a comprehensive collection of ALL ETFs with their basic metadata.
+Store all ETFs now, filter for Equity ETFs later when building holdings.
+** Primary Data fields:
+1. **AUM (assets under management)** — you'll use this to filter for large Equity ETFs.
+2. price
+3. volume
+4. asset class
+5. expense ratio
+** Other fields to consider:
+1. symbol
+2. fund name
+3. asset class
+4. sector
+5. industry
+6. country
+7. market cap
+8. Price to Earnings ratio
+9. change
+10. volume

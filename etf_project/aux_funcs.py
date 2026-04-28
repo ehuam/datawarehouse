@@ -77,7 +77,7 @@ def build_tree_data(
     node_name = node.name if node.name else "[DOCUMENT_ROOT]"
     
     node_dict = {
-        "name": f"{node_name} | {node.get('id', '')}",
+        "name": f"{node_name} | {node_data.get('semantic_role', '')}",
         "data": node_data,
         "children": []
         }

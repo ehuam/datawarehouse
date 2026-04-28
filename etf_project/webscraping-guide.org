@@ -12,3 +12,4 @@ url = "https://finviz.com/screener.ashx?v=181"
 Issue: beautiful soup returned an empty HTML file.
 Solution: Use Selenium.
 
+We will use the styled-row, because every element of the ETF table is wrapped with this tag.

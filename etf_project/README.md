@@ -36,3 +36,9 @@ colima stop
 colima status
 ``` 
 - should return "colima is not running"
+
+
+### Dependencies
+For this project we are using Firefox Web-Driver (geckodriver). <br>
+Too avoid having user install binaries to their system, outside of python managed environment.<br>
+We are using "webdriver-manager". 

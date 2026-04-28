@@ -1,0 +1,7 @@
+#+TITLE: GUIDE WEBSCRAPING - FINVIZ
+#+AUTHOR: Edgar Huamantla
+#+DATE: <2026-04-27 Mon>
+#+FILETAGS: :project3:etf:finviz:selenium:
+
+* Discovery
+url = "https://finviz.com/screener.ashx?v=181"

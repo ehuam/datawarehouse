@@ -46,12 +46,22 @@ def extract_node_data(node:Tag, head_length:int=10, boxover_pattern:str=None) ->
     return node_data_dict
 
 
-def build_tree_data(node: BeautifulSoup | Tag, depth:int=0, max_depth:int=3, tag_pattern=None) -> dict:
+def build_tree_data(
+        node: BeautifulSoup | Tag,
+        depth:int=0,
+        max_depth:int=3,
+        tag_pattern = None,
+        ignore_list:set = None,
+) -> dict:
     """
     build a nested dictionary of the DOM structure with metadata
     """
     if depth > max_depth:
         return None
+
+    if ignore_list and node.name in ignore_list:
+        return None
+        
 
     node_name = node.name if node.name else "[DOCUMENT_ROOT]"
     
@@ -61,10 +71,15 @@ def build_tree_data(node: BeautifulSoup | Tag, depth:int=0, max_depth:int=3, tag
         "children": []
         }
 
-    for child in node.find_all(recursive=False):
+    for child in node.find_all(True,recursive=False):
         match child:
             case Tag() as c:
-                child_map = build_tree_data(c, depth + 1, max_depth, tag_pattern)
+                child_map = build_tree_data(
+                    c,
+                    depth + 1,
+                    max_depth,
+                    tag_pattern,
+                    ignore_list)
                 if child_map:
                     node_dict["children"].append(child_map)
 

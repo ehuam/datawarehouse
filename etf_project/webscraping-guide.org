@@ -5,3 +5,10 @@
 
 * Discovery
 url = "https://finviz.com/screener.ashx?v=181"
+
+** Hurdles
+
+*** Blank web page 
+Issue: beautiful soup returned an empty HTML file.
+Solution: Use Selenium.
+

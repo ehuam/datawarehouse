@@ -13,3 +13,11 @@ Issue: beautiful soup returned an empty HTML file.
 Solution: Use Selenium.
 
 We will use the styled-row, because every element of the ETF table is wrapped with this tag.
+
+**** Interesting Tags
+
+|---------------------+------------|
+| <tag>               | info       |
+|---------------------+------------|
+| data-boxover-ticker | ETF ticker |
+|                     |            |

@@ -52,7 +52,7 @@ def build_tree_data(
         depth:int=0,
         max_depth:int=3,
         tag_pattern = None,
-        ignore_list:set = None,
+        inventory_hash: dict = None,
 ) -> dict:
     """
     build a nested dictionary of the DOM structure with metadata
@@ -60,15 +60,25 @@ def build_tree_data(
     if depth > max_depth:
         return None
 
-    if ignore_list and node.name in ignore_list:
-        return None
-        
+    node_data = extract_node_data(node, boxover_pattern=tag_pattern) if node.name else {}
+    raw_keys = [node.name, node.get('id')] + node.get('class', [])
+    search_keys = [key for key in raw_keys if key]
 
+    for key in search_keys:
+        if inventory_hash and key in inventory_hash:
+            role = inventory_hash[key]
+
+            if role == "layout_noise":
+                return None
+            
+            node_data["semantic_role"] = role
+            break
+    
     node_name = node.name if node.name else "[DOCUMENT_ROOT]"
     
     node_dict = {
         "name": f"{node_name} | {node.get('id', '')}",
-        "data": extract_node_data(node, boxover_pattern=tag_pattern) if node.name else {},
+        "data": node_data,
         "children": []
         }
 
@@ -80,7 +90,7 @@ def build_tree_data(
                     depth + 1,
                     max_depth,
                     tag_pattern,
-                    ignore_list)
+                    inventory_hash)
                 if child_map:
                     node_dict["children"].append(child_map)
 

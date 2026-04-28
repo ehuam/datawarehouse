@@ -220,4 +220,4 @@ __marimo__/
 **/*puppeteer*
 
 #db files
-data/db/
+**/data/db/

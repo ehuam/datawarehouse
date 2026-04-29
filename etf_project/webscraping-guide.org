@@ -21,3 +21,18 @@ We will use the styled-row, because every element of the ETF table is wrapped wi
 |---------------------+------------|
 | data-boxover-ticker | ETF ticker |
 |                     |            |
+
+**** Pagination
+{'name': 'td | ', 'id': 'screener_pagination', 'content_head': '123456⋯100', ...}
+
+
+***  SOLUTIONS
+we were able to decompose a website based on its functional areas. what we wanted to do was
+exploit the HTML tree pattern to see if we could view the website in a way that would remove noise.
+
+what we ended up doing was iterating through different ways to filter out the html tags.
+initially we had one tag that we would look for and an ignore list. this then developed into defining
+what areas of map could be labeled as. this eliminated the need for an ignore list.
+
+later we decided to see how we could visualize the website in a way that we were able to capture our data
+and look at the browser and see if we left anything on the table (as far as scraping goes).

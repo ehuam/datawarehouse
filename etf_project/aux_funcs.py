@@ -148,26 +148,35 @@ def extract_from_tree_map(node, schema, expected_count, extracted_data=None):
     node_data = node.get('data', {})
 
     if node_data.get('semantic_role') == 'data_rows':
+        row_entry = dict()
+        row_children = node.get('children', [])
 
-        row_entry = {
-            key: node_data.get(key) for key in schema if key in node_data
-            }
-        if row_entry:
-            extracted_data.append(row_entry)
+        for idx, requested_keys in schema.items():
+            target_child = next((
+                child for child in row_children
+                if child.get("data").get("tree_index") == idx
+            ), None)
+            if target_child:
+                c_data = target_child.get("data", {})
 
-    for child in node.get("children", []):
-        extract_from_tree_map(
-            child,
-            schema,
-            expected_count,
-            extracted_data
-            )
+                for key in requested_keys:
+                    if key in c_data:
+                        row_entry[key] = c_data[key]
+                    else:
+                        row_entry[key] = c_data.get("content_head")
+
+        extracted_data.append(row_entry)
+                        
+    for child in node.get('children', []):
+        extract_from_tree_map(child, schema, expected_count, extracted_data)
+                
+
     if node.get("data",{}).get("semantic_role") == "page_root":
         actual_count = len(extracted_data)
         if actual_count != expected_count:
             LOGGER.warning(
                 f"Extracted {actual_count} records, but expected {expected_count}. Check the schema and tree map for accuracy."
                 )
-        logger.info(f"Extracted {actual_count} records from the DOM tree.")
+        LOGGER.info(f"Extracted {actual_count} records from the DOM tree.")
 
     return extracted_data

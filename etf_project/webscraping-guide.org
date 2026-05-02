@@ -73,3 +73,15 @@ the end the count should be less than what the first page showed.
    }
 
 #+END_SRC
+
+* Implementation
+
+** Getting Data and storing
+Our first run to download the html websites took about 1 hour and 15 minutes for about
+552 pages.
+So what we decided to do instead is to move this full run from the notebook into a python
+file. The user will have to download web page data, either a range of pages or a full download.
+
+*** Notebook Changes
+After a user has already completed a data download (full or partial). The notebook will require
+manual definition of the folder to use. 

@@ -135,6 +135,19 @@ def build_visual_map(node_data) -> go.Figure:
     )
     return fig
 
+def find_branch_by_name(node, target_name):
+    """
+    use your functional areas mapping name here
+    """
+    if node.get('name') == target_name:
+        return node
+    for child in node.get('children', []):
+        result = find_branch_by_name(child, target_name)
+        if result:
+            return result
+    return None
+
+
 def extract_from_tree_map(node, schema, expected_count, extracted_data=None):
     """
     node: dom tree data created from build_tree_data

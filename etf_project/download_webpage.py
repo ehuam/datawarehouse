@@ -9,7 +9,7 @@ We have then decided to move the methods from the notebook here.
 
 import os
 import time
-import datetime
+from datetime import datetime, timedelta
 import logging
 from pathlib import Path
 
@@ -88,6 +88,52 @@ def get_timestamp_folder(base_folder: Path) -> Path:
     return batch_folder
 
 
+# get the scrape plan
+def extract_scrape_list_from_tree(dom_tree, webpage_name:str):
+    """
+    using the pagination tags to extract the URL list for scraping
+    """
+
+    match webpage_name:
+        case "finviz":
+            webpage = "https://finviz.com/"
+            string_pattern = "screener.ashx?v=181&r=" # finvzi pattern
+            target_branch = "PAGINATION | select | pagination_drop"
+        case _ :        
+            LOGGER.error(f'No URL pattern defined for {webpage_name}. Check the function implementation.')
+            raiseValueError(f'no pattern defined for {webpage_name}')
+    drop_branch = find_branch_by_name(dom_tree, target_branch)
+        
+    if not drop_branch:
+        LOGGER.warning("No PAGINATION_DROP label found in tree. Check functional ares mapping")
+        return []
+
+    scrape_urls = []
+    UNWANTED_CHARS = ['/']
+    
+    for idx, option in enumerate(drop_branch.get('children', [])):
+        data = option.get('data', {})
+        r_value = data.get('value')
+        label = data.get('content_head')
+
+        if r_value:
+            target_path = f"{string_pattern}{r_value}"
+            full_url = urljoin(webpage, target_path)
+
+            clean_label = label
+            for char in UNWANTED_CHARS:
+                clean_label = clean_label.replace(char, '')
+
+
+        scrape_urls.append({
+            "index": idx,
+            "url": full_url,
+            "label": clean_label.strip() if label else r_value,
+            "offset": r_value
+            })
+    LOGGER.info(f"extracted {len(scrape_urls)} URLs from pagination drop-down for {webpage_name}")
+    return scrape_urls
+
 
 # moving method from note book
 # bulk download
@@ -126,3 +172,44 @@ def execute_bulk_download(driver, scrape_plan, batch_folder):
             continue
             
     logger.info(f"Bulk download complete. Files saved to {batch_folder}")
+
+# supporting re runs
+def get_latest_batch_folder(base_dir='webpages') -> Path | bool:
+    """
+    we want to check if a folder was recently created to avoid redownloading data.
+    """
+    path = Path(base_dir)
+    if not path.exists():
+        LOGGER.info(f'no existing data folder found at {base_dir}.')
+        return False
+    
+    batches = [directory for directory in path.iterdir() if directory.is_dir()]
+    if not batches:
+        LOGGER.info(f'no existing batch folders found in {base_dir}.')
+        return False
+    
+    latest_batch = max(batches, key=lambda d: d.stat().st_mtime)
+    elapsed_time = datetime.datetime.now() - datetime.datetime.fromtimestamp(latest_batch.stat().st_mtime)
+    
+    if elapsed_time < timedelta(minutes=15):
+        LOOGER.info(f"last batch folder {latest_batch} created {elapsted_time}; returning last")
+        return latest_batch
+    
+def initialize_batch_folder(base_dir='webpages') -> None:
+    """
+    create a folder if one does not exist.
+    if a recent folder exist return the path to user and exit
+    """
+    check_folder = get_latest_batch_folder(base_dir)
+    match check_folder:
+        case Path() as folder:
+            LOGGER.info(f"recent batch found at {folder}")
+            raise FilexistsError(f"recent batch found at {folder}")
+        case False:
+            LOGGER.info(f"no recent batch found, creating new batch folder.")
+   
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    batch_path = Path(base_dir) / timestamp
+    batch_path.mkdir(parents=True, exist_ok=True)
+    LOGGER.info(f"created new batch folder at {batch_path}")
+    return batch_path

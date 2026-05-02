@@ -216,6 +216,8 @@ def extract_scrape_list_from_tree(dom_tree, webpage_name:str):
         return []
 
     scrape_urls = []
+    UNWANTED_CHARS = ['/']
+    
     for idx, option in enumerate(drop_branch.get('children', [])):
         data = option.get('data', {})
         r_value = data.get('value')
@@ -225,12 +227,15 @@ def extract_scrape_list_from_tree(dom_tree, webpage_name:str):
             target_path = f"{string_pattern}{r_value}"
             full_url = urljoin(webpage, target_path)
 
+            clean_label = label
+            for char in UNWANTED_CHARS:
+                clean_label = clean_label.replace(char, '')
 
 
         scrape_urls.append({
             "index": idx,
             "url": full_url,
-            "label": label.strip() if label else r_value,
+            "label": clean_label.strip() if label else r_value,
             "offset": r_value
             })
     LOGGER.info(f"extracted {len(scrape_urls)} URLs from pagination drop-down for {webpage_name}")

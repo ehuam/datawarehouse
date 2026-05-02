@@ -53,7 +53,6 @@ def build_tree_data(
         node: BeautifulSoup | Tag,
         depth:int=0,
         max_depth:int=10,
-        tag_pattern = None,
         inventory_hash: dict = None,
 ) -> dict:
     """
@@ -62,6 +61,7 @@ def build_tree_data(
     if depth > max_depth:
         return None
 
+    # label 
     node_classes = node.get('class', [])
     raw_keys = [node.name, node.get('id')] + node_classes
     search_keys = [key for key in raw_keys if key]
@@ -86,14 +86,15 @@ def build_tree_data(
         "children": []
         }
 
-    for child in node.find_all(True,recursive=False):
+    # add index labeling
+    for idx, child in enumerate(node.find_all(True,recursive=False)):
         child_map = build_tree_data(
                     child,
                     depth + 1,
                     max_depth,
-                    tag_pattern,
                     inventory_hash)
         if child_map:
+            child_map["data"]["tree_index"] = idx
             node_dict["children"].append(child_map)
 
     return node_dict

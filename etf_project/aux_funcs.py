@@ -133,3 +133,40 @@ def build_visual_map(node_data) -> go.Figure:
         autosize=True
     )
     return fig
+
+def extract_from_tree_map(node, schema, expected_count, extracted_data=None):
+    """
+    node: dom tree data created from build_tree_data
+    schema: list of keys to pull (e.g. ['ticker', 'company'])
+    expected_count: visually from the webpage how many records are displayed
+    extracted_data: internal use for recursion, should be None when called externally
+    """
+    if extracted_data is None:
+        extracted_data = list()
+
+    node_data = node.get('data', {})
+
+    if node_data.get('semantic_role') == 'data_rows':
+
+        row_entry = {
+            key: node_data.get(key) for key in schema if key in node_data
+            }
+        if row_entry:
+            extracted_data.append(row_entry)
+
+    for child in node.get("children", []):
+        extract_from_tree_map(
+            child,
+            schema,
+            expected_count,
+            extracted_data
+            )
+    if node.get("data",{}).get("semantic_role") == "page_root":
+        actual_count = len(extracted_data)
+        if actual_count != expected_count:
+            LOGGER.warning(
+                f"Extracted {actual_count} records, but expected {expected_count}. Check the schema and tree map for accuracy."
+                )
+        logger.info(f"Extracted {actual_count} records from the DOM tree.")
+
+    return extracted_data

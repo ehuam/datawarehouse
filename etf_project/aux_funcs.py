@@ -180,3 +180,33 @@ def extract_from_tree_map(node, schema, expected_count, extracted_data=None):
         LOGGER.info(f"Extracted {actual_count} records from the DOM tree.")
 
     return extracted_data
+
+def extract_scrape_list_from_tree(dom_tree):
+    """
+    using the pagination tags to extract the URL list for scraping
+    """
+    drop_branch = next(
+        (child for child in dom_tree.get('children', [])
+         if child.get('name') == 'PAGINATION_DROP'), None)
+
+    if not drop_branch:
+        LOGGER.warning("No PAGINATION label found in tree. Check functional ares mapping")
+        return []
+
+    scrape_urls = []
+    for idx, option in enumerate(drop_branch.get('children', [])):
+        path = option.get('data', {}).get('value')
+        label = option.get('data', {}).get('content_head')
+
+
+        scrape_urls.append({
+            "page_index": idx + 1,
+            "url": path,
+            "label": label
+            })
+
+    return scrape_urls
+
+
+
+

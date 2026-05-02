@@ -36,3 +36,40 @@ what areas of map could be labeled as. this eliminated the need for an ignore li
 
 later we decided to see how we could visualize the website in a way that we were able to capture our data
 and look at the browser and see if we left anything on the table (as far as scraping goes).
+
+*** Tree Mapping
+The HTML's structure naturally lent itself to recursive functions.
+We exploited this when visualizing the web page. What we wanted to do is see if we were capturing what we could
+from the web page. What we found is that within the table structures, there are about 7 children cells that
+represent one etf. some of these cells are noise while others have the data we are looking for.
+Because the website dynamically loads some of these data or provides hovering windows it's not neatly structured.
+So what we did was refine how we extracted the HTML. We added indexes to the nodes so that we can define an external
+schema that can be passed to a func that would handle extracting data.
+We added an expected_count, that is optional for debugging. We can anticipate that a user will run this against many webpages and towards
+the end the count should be less than what the first page showed.
+
+
+#+BEGIN_SRC python
+   ETF_COLUMN_MAPPING = {
+       6: ['price', 'ticker', 'company', 'industry', 'value', 'country'],
+       5: ["dividend"],
+       7: ["change_pct"]
+   }
+   first_dataset = aux_funcs.extract_from_tree_map(
+         dom_tree_data,
+         schema=ETF_COLUMN_MAPPING,
+         expected_count=20
+     )
+
+   {
+       'price': '114.89',
+       'ticker': 'A',
+       'company': 'Agilent Technologies Inc',
+       'industry': 'Diagnostics & Research',
+       'value': '32.47B',
+       'country': 'USA',
+       'dividend': '0.87%',
+       'change_pct': '-0.63%'
+   }
+
+#+END_SRC

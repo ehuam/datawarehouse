@@ -12,6 +12,8 @@ import time
 from datetime import datetime, timedelta
 import logging
 from pathlib import Path
+import argparse
+import sys
 
 from bs4 import BeautifulSoup
 
@@ -65,8 +67,15 @@ FUNCTIONAL_AREAS = {
     "PAGINATION_NAV": "screener_pagination",
 }
 
+
 # for faster processing flattening instead of lookup 
 INV_HASH = {item: category for category, items in SITE_INVENTORY.items() for item in items}
+
+def get_args():
+    parser = argparse.ArgumentParser(description="ETF Scraper for Finviz")
+    parse.add_argument("--pages", type=int, default=None, help="number of pages to download default is all")
+    parse.add_argument("--headless", action="store_true", help="run browser in headless mode")
+    return parser.parse_args()
 
 def create_driver(headless: bool = False)-> webDriver.Firefox:
     """
@@ -213,3 +222,65 @@ def initialize_batch_folder(base_dir='webpages') -> None:
     batch_path.mkdir(parents=True, exist_ok=True)
     LOGGER.info(f"created new batch folder at {batch_path}")
     return batch_path
+
+def download_landing_page(driver, url, base_path):
+    webpage_path = base_path / 'finviz_etf_page_one.html'
+    if not webpage_path.exists():
+        try:
+            driver.get(url)
+            logger.info('Explicit wait for page to load')
+            wait = WebDriverWait(driver, 15)
+            wait.until(EC.presence_of_element_located((By.CLASS_NAME, "styled-row")))
+            
+            with open(webpage_path, 'w', encoding='utf-8') as f:
+                f.write(driver.page_source)
+            logger.info(f"{url=} saved to {webpage_path}")
+            
+        except Exception as e:
+            logger.error(f"error fetching {url=}: {e}")
+        
+        finally:
+            driver.quit()
+            logger.info("Selenium WebDriver closed")
+    logger.info(f"{webpage_path} already exists. Skipping download.")
+    return webpage_path
+
+def map_landing_page(webpage_path, max_depth=12):
+    html_blob = webpage_path.read_text(encoding='utf-8')
+    soup = BeautifulSoup(html_blob, 'html.parser')
+    
+    dom_tree_data = {
+    "name": "ETF_SCREENER_AGGREGATE",
+    "data": {"tag": "synthetic", "semantic_role": "page_root"},
+    "children": []
+    }
+    
+    for label, element_id in FUNCTIONAL_AREAS.items():
+        found_node = soup.find(id=element_id)
+        if found_node:
+            branch = aux_funcs.build_tree_data(
+                found_node,
+                max_depth=max_depth,
+                inventory_hash=INV_HASH
+            )
+            if branch:
+                branch["name"] = f"{label} | {branch['name']}"
+                dom_tree_data["children"].append(branch)
+    LOGGER.info(f"mapped dom tree starting from {soup.body.name}; max depth {max_depth}")
+
+def main():
+    args = get_args()
+    
+    pages_to_download = args.pages
+    
+    driver = create_driver(headless=args.headless)
+    CWD = Path.cwd()
+    base_dir = CWD / "webpages"
+    
+    url = 
+    
+    try:
+        first_page_url = download_landing_page(driver, FINVIZ_ETF_PAGE_BASE, base_dir)
+        
+        
+    

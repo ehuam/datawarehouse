@@ -20,6 +20,7 @@ output: Plotly Figure
 import logging
 from bs4 import BeautifulSoup, Tag
 import plotly.graph_objects as go
+from urllib.parse import urljoin
 
 
 LOGGER = logging.getLogger(__name__)
@@ -37,6 +38,7 @@ def extract_node_data(
         "id": node.get('id'),
         "classes": ".".join(node.get('class', [])) if node.get('class') else None,
         "content_head": raw_text[:head_length] if raw_text else None,
+        "value": node.get('value')
     }
 
     for attr, value in node.attrs.items():
@@ -194,32 +196,42 @@ def extract_from_tree_map(node, schema, expected_count, extracted_data=None):
 
     return extracted_data
 
-def extract_scrape_list_from_tree(dom_tree):
+def extract_scrape_list_from_tree(dom_tree, webpage_name:str):
     """
     using the pagination tags to extract the URL list for scraping
     """
-    drop_branch = next(
-        (child for child in dom_tree.get('children', [])
-         if child.get('name') == 'PAGINATION_DROP'), None)
 
+    match webpage_name:
+        case "finviz":
+            webpage = "https://finviz.com/"
+            string_pattern = "screener.ashx?v=181&r=" # finvzi pattern
+            target_branch = "PAGINATION | select | pagination_drop"
+        case _ :        
+            LOGGER.error(f'No URL pattern defined for {webpage_name}. Check the function implementation.')
+            raiseValueError(f'no pattern defined for {webpage_name}')
+    drop_branch = find_branch_by_name(dom_tree, target_branch)
+        
     if not drop_branch:
-        LOGGER.warning("No PAGINATION label found in tree. Check functional ares mapping")
+        LOGGER.warning("No PAGINATION_DROP label found in tree. Check functional ares mapping")
         return []
 
     scrape_urls = []
     for idx, option in enumerate(drop_branch.get('children', [])):
-        path = option.get('data', {}).get('value')
-        label = option.get('data', {}).get('content_head')
+        data = option.get('data', {})
+        r_value = data.get('value')
+        label = data.get('content_head')
+
+        if r_value:
+            target_path = f"{string_pattern}{r_value}"
+            full_url = urljoin(webpage, target_path)
+
 
 
         scrape_urls.append({
-            "page_index": idx + 1,
-            "url": path,
-            "label": label
+            "index": idx,
+            "url": full_url,
+            "label": label.strip() if label else r_value,
+            "offset": r_value
             })
-
+    LOGGER.info(f"extracted {len(scrape_urls)} URLs from pagination drop-down for {webpage_name}")
     return scrape_urls
-
-
-
-

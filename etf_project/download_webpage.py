@@ -13,17 +13,17 @@ from datetime import datetime, timedelta
 import logging
 from pathlib import Path
 import argparse
-import sys
+
 
 from bs4 import BeautifulSoup
 
 # SELENIUM SETUP
 from selenium import webdriver
-from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from urllib.parse import urljoin
 
 import aux_funcs # edgar's static methods
 
@@ -37,39 +37,11 @@ LOGGER = logging.getLogger(__name__)
 
 FINVIZ_ETF_PAGE_BASE = "https://finviz.com/screener.ashx?v=181"
 
-# ETF COLUMN MAPPING - BASED ON STRUCTURE
-ETF_COLUMN_MAPPING = {
-    6: ['price', 'ticker', 'company', 'industry', 'value', 'country'],
-    5: ["dividend"],
-    7: ["change_pct"]
-}
-
-# SITE INVENTORY - USER DECOMPOSITION
-SITE_INVENTORY = {
-    "control_plane": ["screener-combo-title", "screener-combo-select"],
-    "navigation_tabs": ["Descriptiv", "ExchangeAn", "OverviewVa"],
-    "data_rows": ["styled-row"],
-    "layout_noise": [
-        "header", "navbar", "footer", "modal-elite-ad", "script", "noscript", "iframe",
-        "js-elite-features-root", "notifications-container", "notifications-react-root",
-        "dialogs-react-root", "root", "IC_D_1x1_1", "portal/_r_5_", "ICUid_Iframe",
-        "img", "svg", "use", "js-feature-discovery-root", "screener-presets-root"
-    ],
-    "pagination_drop": ["pageSelect"],
-    "pagination_option": ["option"],
-    "navigation_controls": ["screener_pagination", "pages-combo", "is-next", "screener-pages"],
-}
-
-FUNCTIONAL_AREAS = {
-    "SCREENER_FILTERS": "filter-table-top",
-    "DATA": "screener-views-table",
-    "PAGINATION": "pageSelect",
-    "PAGINATION_NAV": "screener_pagination",
-}
 
 
-# for faster processing flattening instead of lookup 
-INV_HASH = {item: category for category, items in SITE_INVENTORY.items() for item in items}
+
+
+
 
 def get_args():
     parser = argparse.ArgumentParser(description="ETF Scraper for Finviz")
@@ -107,9 +79,7 @@ def extract_scrape_list_from_tree(dom_tree, webpage_name:str) -> list[dict]:
 
     match webpage_name:
         case "etf":
-            webpage = "https://finviz.com/"
-            string_pattern = "screener.ashx?v=181&r=" # finvzi pattern
-            target_branch = "PAGINATION | select | pagination_drop"
+
         case "aum":
             webpage = "https://finviz.com/"
             string_pattern = "screener?v=191&r="

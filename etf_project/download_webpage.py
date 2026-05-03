@@ -196,7 +196,7 @@ def execute_bulk_download(driver, scrape_plan, batch_folder: Path):
         save_path = batch_folder / file_name
         
         try:
-            logger.info(f'downloading [{task["index"]}/{total}] {task['label']}')
+            LOGGER.info(f'downloading [{task["index"]}/{total}] {task['label']}')
             driver.get(task['url'])
             
             wait.until(EC.presence_of_element_located((By.CLASS_NAME, "styled-row")))
@@ -212,13 +212,17 @@ def execute_bulk_download(driver, scrape_plan, batch_folder: Path):
             
             save_path.write_text(driver.page_source, encoding='utf-8')
             
+            # mark complete after file is written
+            progress_utils.mark_complete(batch_folder, task)
+            
             # polite delay
             time.sleep(5)
         except Exception as e:
-            logger.error(f"failed to download {task['label']}: {e}")
+            LOGGER.error(f"failed to download {task['label']}: {e}")
+            progress_utils.log_error(batch_folder, task, e)
             continue
             
-    logger.info(f"Bulk download complete. Files saved to {batch_folder}")
+    LOGGER.info(f"Bulk download complete. Files saved to {batch_folder}")
     
     
 def main():

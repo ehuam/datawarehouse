@@ -46,9 +46,11 @@ SUPPORTED = {
 }
 
 SITE_CONFIG = {
-    "functional_areas": finviz_config.FUNCTIONAL_AREAS,
-    "inventory_hash": finviz_config.INV_HASH,
-    "base_url": finviz_config.BASE_URL,
+    "finviz": {
+        "functional_areas": finviz_config.FUNCTIONAL_AREAS,
+        "inventory_hash": finviz_config.INV_HASH,
+        "base_url": finviz_config.BASE_URL,
+    }
 }
 
 # RECENT WINDOW CHECK - to avoid redownloading
@@ -85,7 +87,7 @@ def resolve_config(webpage:str, data_type: str) -> tuple[dict, dict]:
     if webpage not in SUPPORTED:
         LOGGER.error(f"webpage {webpage} not supported. Supported pages are: {list(SUPPORTED.keys())}")
         raise ValueError(f"unsupported webpage {webpage}")
-    data_req_map = SUPPORTED[webpage]
+    data_req_map = SUPPORTED[webpage][data_request]
     if data_type not in data_req_map:
         LOGGER.error(f"data type {data_type} not supported for webpage {webpage}. Supported types are: {list(type_map.keys())}")
         raise ValueError(f"unsupported data type {data_type} for webpage {webpage}")

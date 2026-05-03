@@ -75,6 +75,7 @@ def get_args():
     parser = argparse.ArgumentParser(description="ETF Scraper for Finviz")
     parse.add_argument("--pages", type=int, default=None, help="number of pages to download default is all")
     parse.add_argument("--headless", action="store_true", help="run browser in headless mode")
+    parse.add_argument("--webpage", choices=['etf', 'aum'], default='etf', help="which webpage to scrape")
     return parser.parse_args()
 
 def create_driver(headless: bool = False)-> webDriver.Firefox:
@@ -98,15 +99,20 @@ def get_timestamp_folder(base_folder: Path) -> Path:
 
 
 # get the scrape plan
-def extract_scrape_list_from_tree(dom_tree, webpage_name:str):
+def extract_scrape_list_from_tree(dom_tree, webpage_name:str) -> list[dict]:
     """
     using the pagination tags to extract the URL list for scraping
+    only supports finviz.
     """
 
     match webpage_name:
-        case "finviz":
+        case "etf":
             webpage = "https://finviz.com/"
             string_pattern = "screener.ashx?v=181&r=" # finvzi pattern
+            target_branch = "PAGINATION | select | pagination_drop"
+        case "aum":
+            webpage = "https://finviz.com/"
+            string_pattern = "screener?v=191&r="
             target_branch = "PAGINATION | select | pagination_drop"
         case _ :        
             LOGGER.error(f'No URL pattern defined for {webpage_name}. Check the function implementation.')
@@ -277,10 +283,19 @@ def main():
     CWD = Path.cwd()
     base_dir = CWD / "webpages"
     
-    url = 
+    webpage = args.webpage
     
     try:
         first_page_url = download_landing_page(driver, FINVIZ_ETF_PAGE_BASE, base_dir)
+        dom_tree = map_landing_page(first_page_url)
+
+        full_scrape_plan = extract_scrape_list_from_tree(dom_tree, webpage)
+
+        if args.pages:
+            scrape_plan = full_scrape_plan[:args.pages]
+            logger.info(f"limited scrape plan to first {args.pages} pages")
+
+        recent_batch = get_latest_batch_folder(base_dir)
+        batch_folder = None
         
         
-    

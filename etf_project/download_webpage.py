@@ -110,6 +110,19 @@ def create_driver(headless: bool = False)-> webDriver.Firefox:
     return driver
 
 # batch folder management
+
+def resolve_paths(base_dir: Path, webpage:str, data_request) -> tuple[Path, Path]:
+    """
+    landing_pages_dir : webpages/finviz/
+    batches_dir : webpages/finviz/etf
+    """
+    landing_pages_dir = base_dir / webpage
+    batches_dir = base_dir / webpage / data_request
+    batches_dir.mkdir(parents=True, exist_okay=True)
+    return (landing_pages_dir, batches_dir)
+    
+
+
 def find_recent_complete_batch(base_dir: Path, webpage: str, data_request: str) -> Path | None:
     """
     checks in folder to see if a progress json exists and is complete

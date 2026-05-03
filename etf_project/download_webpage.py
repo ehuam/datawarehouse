@@ -14,9 +14,6 @@ import logging
 from pathlib import Path
 import argparse
 
-
-from bs4 import BeautifulSoup
-
 # SELENIUM SETUP
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
@@ -27,6 +24,7 @@ from urllib.parse import urljoin
 
 import aux_funcs # edgar's static methods
 import progress_utils # edgar's file writing funcs
+import scrape_plan # edgar's scraping funcs
 # config setup
 import config.finviz as finviz_config
 
@@ -73,6 +71,11 @@ def get_args():
     parse.add_argument("--pages", type=int, default=None, help="number of pages to download default is all")
     parse.add_argument("--headless", action="store_true", help="run selenium in headless mode")
     parse.add_argument(
+        "--init",
+        action="store_true",
+        help="download the landing page"
+    )
+    parse.add_argument(
         "--force",
         action="store_true",
         help="override recent complete batch and rerun."
@@ -80,18 +83,18 @@ def get_args():
     
     return parser.parse_args()
 
-def resolve_config(webpage:str, data_type: str) -> tuple[dict, dict]:
+def resolve_config(webpage:str, data_request_type: str) -> tuple[dict, dict]:
     """
     check if webpage is supported 
     """
     if webpage not in SUPPORTED:
         LOGGER.error(f"webpage {webpage} not supported. Supported pages are: {list(SUPPORTED.keys())}")
         raise ValueError(f"unsupported webpage {webpage}")
-    data_req_map = SUPPORTED[webpage][data_request]
-    if data_type not in data_req_map:
-        LOGGER.error(f"data type {data_type} not supported for webpage {webpage}. Supported types are: {list(type_map.keys())}")
-        raise ValueError(f"unsupported data type {data_type} for webpage {webpage}")
-    return type_map[data_type], SITE_CONFIG[webpage]
+    data_req_map = SUPPORTED[webpage][data_request_type]
+    if data_request_type not in data_req_map:
+        LOGGER.error(f"data type {data_request_type} not supported for webpage {webpage}. Supported types are: {list(data_req_map.keys())}")
+        raise ValueError(f"unsupported data request {data_request_type} for webpage {webpage}")
+    return data_req_map[data_request_type], SITE_CONFIG[webpage]
     
 
 # driver setup - default Firefox
@@ -156,7 +159,7 @@ def download_landing_page(
         first_page_url,
         batch_folder,
         request_type_config:dict):
-    file_name = f"{request_type_config['name'].lower()}.html"
+    file_name = f"{request_type_config['name'].lower()}_landing.html"
     webpage_path = base_path / file_name 
     
     if webpage_path.exists():

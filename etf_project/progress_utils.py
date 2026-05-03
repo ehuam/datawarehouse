@@ -17,7 +17,7 @@ def create_progress_file(
     progress_path = batch_folder / PROGRESS_FILE
     
     progress = {
-        "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "created_at": datetime.now().strftime("%Y%m%d_%H%M%S"),
         "webpage": webpage,
         "data_request": data_request,
         "total_pages":  total_pages,
@@ -56,7 +56,7 @@ def mark_complete(batch_folder: Path, page: dict) -> None:
         "url": page['url'],
         "label": page['label']
         "offset": page["offset"]
-        "completed_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        "completed_at": datetime.now().strftime("%Y%m%d_%H%M%S")
     })
     
     progress_path = batch_folder / PROGRESS_FILE
@@ -85,7 +85,7 @@ def log_error(batch_folder: Path, page:dict, error: Exception) -> None:
     """
     error_path = batch_folder / ERROR_LOG_FILE
     error_record = {
-        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "timestamp": datetime.now().strftime("%Y%m%d_%H%M%S"),
         "index": page.get('index'),
         "url": page.get('url'),
         "label": page.get('label'),

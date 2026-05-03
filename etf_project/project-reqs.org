@@ -26,3 +26,9 @@ Store all ETFs now, filter for Equity ETFs later when building holdings.
 8. Price to Earnings ratio
 9. change
 10. volume
+
+** Datasources
+
+|-----+------------------------------------------------------------------|
+| ETF |                                                                  |
+| AUM | `https://finviz.com/screener.ashx?v=191&f=ind_exchangetradedfund |

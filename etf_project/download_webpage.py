@@ -124,7 +124,7 @@ def find_recent_complete_batch(base_dir: Path, webpage: str, data_request: str) 
         if not progress_utils.is_run_complete(progress):
             continue
         
-        created_at = datetime.strptime(progress['created_at'], "%Y-%m-%d %H:%M:%S")
+        created_at = datetime.strptime(progress['created_at'], "%Y%m%d_%H%M%S")
         elapsed = datetime.now() - created_at
         if elapsed < timedelta(minutes=RECENT_WINDOW_MINUTES):
             LOGGER.info(f"recent complete batch found at {folder}, run {elapsed} ago. Use --force to override.")
@@ -132,8 +132,15 @@ def find_recent_complete_batch(base_dir: Path, webpage: str, data_request: str) 
      
     return None
     
-
-
+def create_batch_folder(base_dir: Path) -> Path:
+    """
+    create a timestamped folder
+    """
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    batch_path = base_dir / f"batch_{timestamp}"
+    batch_path.mkdir(parents=True, exist_ok=True)
+    LOGGER.info(f"created new folder at {batch_path}")
+    return batch_path
 
 # get the scrape plan
 def extract_scrape_list_from_tree(dom_tree, webpage_name:str) -> list[dict]:

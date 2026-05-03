@@ -26,9 +26,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from urllib.parse import urljoin
 
 import aux_funcs # edgar's static methods
-
+import progress_utils # edgar's file writing funcs
 # config setup
 import config.finviz as finviz_config
+
 
 logging.basicConfig(
     level=logging.INFO,
@@ -50,6 +51,9 @@ SITE_CONFIG = {
     "base_urls": finviz_config.BASE_URL,
 }
 
+# RECENT WINDOW CHECK - to avoid redownloading
+RECENT_WINDOW_MINUTES = 30
+
 # arg parse
 def get_args():
     parser = argparse.ArgumentParser(description="Data Scraper for Finviz")
@@ -59,13 +63,19 @@ def get_args():
         choices=list(SUPPORTED.keys()),
         help="which webpage to scrape")
     parse.add_argument(
-        "--data",
+        "--data-request",
         required=True,
         choices=["etf", "aum"],
         help="which data to scrape"
     )
     parse.add_argument("--pages", type=int, default=None, help="number of pages to download default is all")
     parse.add_argument("--headless", action="store_true", help="run selenium in headless mode")
+    parse.add_argument(
+        "--force",
+        action="store_true",
+        help="override recent complete batch and rerun."
+    )
+    
     return parser.parse_args()
 
 def resolve_config(webpage:str, data_type: str) -> tuple[dict, dict]:
@@ -75,8 +85,8 @@ def resolve_config(webpage:str, data_type: str) -> tuple[dict, dict]:
     if webpage not in SUPPORTED:
         LOGGER.error(f"webpage {webpage} not supported. Supported pages are: {list(SUPPORTED.keys())}")
         raise ValueError(f"unsupported webpage {webpage}")
-    type_map = SUPPORTED[webpage]
-    if data_type not in type_map:
+    data_req_map = SUPPORTED[webpage]
+    if data_type not in data_req_map:
         LOGGER.error(f"data type {data_type} not supported for webpage {webpage}. Supported types are: {list(type_map.keys())}")
         raise ValueError(f"unsupported data type {data_type} for webpage {webpage}")
     return type_map[data_type], SITE_CONFIG[webpage]
@@ -94,13 +104,22 @@ def create_driver(headless: bool = False)-> webDriver.Firefox:
     driver = webdriver.Firefox(options=options)
     return driver
 
-# create a folder for the batch etf pages downloaded
-def get_timestamp_folder(base_folder: Path) -> Path:
-    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    batch_folder = base_folder / f"batch_{timestamp}"
-    batch_folder.mkdir(exist_ok=True)
-    logger.info(f"Created batch folder: {batch_folder}")
-    return batch_folder
+# batch folder management
+def find_recent_complete_batch(base_dir: Path, webpage: str, data_request: str) -> Path | None:
+    """
+    checks in folder to see if a progress json exists and is complete
+    """
+    if not base_dir.exists():
+        return None
+    
+    for folder in base_dir.iterdir():
+        if not folder.is_dir():
+            continue
+            
+        progress = progress_utils.read_progress_file(folder)
+        if not progress:
+            continue
+        if progress.get('webpage') != webpage or progress.get('request')
 
 
 # get the scrape plan
@@ -191,46 +210,9 @@ def execute_bulk_download(driver, scrape_plan, batch_folder):
             
     logger.info(f"Bulk download complete. Files saved to {batch_folder}")
 
-# supporting re runs
-def get_latest_batch_folder(base_dir='webpages') -> Path | bool:
-    """
-    we want to check if a folder was recently created to avoid redownloading data.
-    """
-    path = Path(base_dir)
-    if not path.exists():
-        LOGGER.info(f'no existing data folder found at {base_dir}.')
-        return False
-    
-    batches = [directory for directory in path.iterdir() if directory.is_dir()]
-    if not batches:
-        LOGGER.info(f'no existing batch folders found in {base_dir}.')
-        return False
-    
-    latest_batch = max(batches, key=lambda d: d.stat().st_mtime)
-    elapsed_time = datetime.datetime.now() - datetime.datetime.fromtimestamp(latest_batch.stat().st_mtime)
-    
-    if elapsed_time < timedelta(minutes=15):
-        LOOGER.info(f"last batch folder {latest_batch} created {elapsted_time}; returning last")
-        return latest_batch
-    
-def initialize_batch_folder(base_dir='webpages') -> None:
-    """
-    create a folder if one does not exist.
-    if a recent folder exist return the path to user and exit
-    """
-    check_folder = get_latest_batch_folder(base_dir)
-    match check_folder:
-        case Path() as folder:
-            LOGGER.info(f"recent batch found at {folder}")
-            raise FilexistsError(f"recent batch found at {folder}")
-        case False:
-            LOGGER.info(f"no recent batch found, creating new batch folder.")
-   
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    batch_path = Path(base_dir) / timestamp
-    batch_path.mkdir(parents=True, exist_ok=True)
-    LOGGER.info(f"created new batch folder at {batch_path}")
-    return batch_path
+
+
+# downloads
 
 def download_landing_page(driver, url, base_path):
     webpage_path = base_path / 'finviz_etf_page_one.html'

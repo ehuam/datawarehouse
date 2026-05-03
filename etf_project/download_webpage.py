@@ -256,28 +256,7 @@ def download_landing_page(driver, url, base_path):
     logger.info(f"{webpage_path} already exists. Skipping download.")
     return webpage_path
 
-def map_landing_page(webpage_path, max_depth=12):
-    html_blob = webpage_path.read_text(encoding='utf-8')
-    soup = BeautifulSoup(html_blob, 'html.parser')
-    
-    dom_tree_data = {
-    "name": "ETF_SCREENER_AGGREGATE",
-    "data": {"tag": "synthetic", "semantic_role": "page_root"},
-    "children": []
-    }
-    
-    for label, element_id in FUNCTIONAL_AREAS.items():
-        found_node = soup.find(id=element_id)
-        if found_node:
-            branch = aux_funcs.build_tree_data(
-                found_node,
-                max_depth=max_depth,
-                inventory_hash=INV_HASH
-            )
-            if branch:
-                branch["name"] = f"{label} | {branch['name']}"
-                dom_tree_data["children"].append(branch)
-    LOGGER.info(f"mapped dom tree starting from {soup.body.name}; max depth {max_depth}")
+
 
 def main():
     args = get_args()

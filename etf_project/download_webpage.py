@@ -142,56 +142,6 @@ def create_batch_folder(base_dir: Path) -> Path:
     LOGGER.info(f"created new folder at {batch_path}")
     return batch_path
 
-# get the scrape plan
-def extract_scrape_list_from_tree(dom_tree, webpage_name:str) -> list[dict]:
-    """
-    using the pagination tags to extract the URL list for scraping
-    only supports finviz.
-    """
-
-    match webpage_name:
-        case "etf":
-
-        case "aum":
-            webpage = "https://finviz.com/"
-            string_pattern = "screener?v=191&r="
-            target_branch = "PAGINATION | select | pagination_drop"
-        case _ :        
-            LOGGER.error(f'No URL pattern defined for {webpage_name}. Check the function implementation.')
-            raiseValueError(f'no pattern defined for {webpage_name}')
-    drop_branch = find_branch_by_name(dom_tree, target_branch)
-        
-    if not drop_branch:
-        LOGGER.warning("No PAGINATION_DROP label found in tree. Check functional ares mapping")
-        return []
-
-    scrape_urls = []
-    UNWANTED_CHARS = ['/']
-    
-    for idx, option in enumerate(drop_branch.get('children', [])):
-        data = option.get('data', {})
-        r_value = data.get('value')
-        label = data.get('content_head')
-
-        if r_value:
-            target_path = f"{string_pattern}{r_value}"
-            full_url = urljoin(webpage, target_path)
-
-            clean_label = label
-            for char in UNWANTED_CHARS:
-                clean_label = clean_label.replace(char, '')
-
-
-        scrape_urls.append({
-            "index": idx,
-            "url": full_url,
-            "label": clean_label.strip() if label else r_value,
-            "offset": r_value
-            })
-    LOGGER.info(f"extracted {len(scrape_urls)} URLs from pagination drop-down for {webpage_name}")
-    return scrape_urls
-
-
 # moving method from note book
 # bulk download
 def execute_bulk_download(driver, scrape_plan, batch_folder):

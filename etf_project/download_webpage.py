@@ -27,19 +27,28 @@ from urllib.parse import urljoin
 
 import aux_funcs # edgar's static methods
 
+# config setup
+import config.finviz as finviz_config
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(name)s - %(levelname)s - %(asctime) - %(message)s",
     )
 LOGGER = logging.getLogger(__name__)
 
-# CONSTANTS
+# Supported Web pages
+SUPPORTED = {
+    "finviz": {
+        "etf": finviz_config.ETF,
+        "aum": finviz_config.AUM
+    }   
+}
 
-FINVIZ_ETF_PAGE_BASE = "https://finviz.com/screener.ashx?v=181"
-
-
-
-
+SITE_CONFIG = {
+    "functional_areas": finviz_config.FUNCTIONAL_AREAS,
+    "inventory_hash": finviz_config.INV_HASH,
+    "base_urls": finviz_config.BASE_URL,
+}
 
 
 

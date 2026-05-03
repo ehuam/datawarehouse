@@ -42,3 +42,57 @@ def read_progress_file(batch_folder: Path) -> dict | None:
     LOGGER.info('no progress file found')
     return None
 
+def mark_complete(batch_folder: Path, page: dict) -> None:
+    """
+    write to json after html page has been downloaded
+    """
+    progress = read_progress_file(batch_folder)
+    if progress is None:
+        LOGGER.error("No progess file found.")
+        raise FileNotFoundError("no progress file found")
+    
+    progress['completed'].append({
+        "index": page['index'],
+        "url": page['url'],
+        "label": page['label']
+        "offset": page["offset"]
+        "completed_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    })
+    
+    progress_path = batch_folder / PROGRESS_FILE
+    progress_path.write_text(json.dumps(progress, indent=4), encoding='utf-8')
+    
+def get_completed_urls(batch_folder: Path) -> set[str]:
+    """
+    pick up where we left off
+    """
+    progress = read_progress_file(batch_folder)
+    if not progress:
+        return set()
+    return {entry['url'] for entry in progress.get('completed', [])}
+
+def is_run_complete(progress:dict) -> bool:
+    """
+    check if all pages have been downloaded
+    """
+    return len(progress.get("completed", [])) == progress.get("total_pages", -1)
+
+
+# error log
+def log_error(batch_folder: Path, page:dict, error: Exception) -> None:
+    """
+    add an error entry
+    """
+    error_path = batch_folder / ERROR_LOG_FILE
+    error_record = {
+        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "index": page.get('index'),
+        "url": page.get('url'),
+        "label": page.get('label'),
+        "offset": page.get("offset"),
+        "error": str(error)
+    }
+    with open(error_path, 'a', encoding='utf-8') as f:
+        f.write(json.dumps(error_record) + "\n")
+        
+    LOGGER.error(f"logged error for {page.get('index')} to {error_path}: {error}")

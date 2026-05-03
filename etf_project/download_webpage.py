@@ -48,7 +48,7 @@ SUPPORTED = {
 SITE_CONFIG = {
     "functional_areas": finviz_config.FUNCTIONAL_AREAS,
     "inventory_hash": finviz_config.INV_HASH,
-    "base_urls": finviz_config.BASE_URL,
+    "base_url": finviz_config.BASE_URL,
 }
 
 # RECENT WINDOW CHECK - to avoid redownloading

@@ -123,14 +123,14 @@ def resolve_paths(base_dir: Path, webpage:str, data_request) -> tuple[Path, Path
     
 
 
-def find_recent_complete_batch(base_dir: Path, webpage: str, data_request: str) -> Path | None:
+def find_recent_complete_batch(batches_dir: Path, webpage: str, data_request: str) -> Path | None:
     """
     checks in folder to see if a progress json exists and is complete
     """
-    if not base_dir.exists():
+    if not batches_dir.exists():
         return None
     
-    for folder in base_dir.iterdir():
+    for folder in batches_dir.iterdir():
         if not folder.is_dir():
             continue
             
@@ -150,34 +150,28 @@ def find_recent_complete_batch(base_dir: Path, webpage: str, data_request: str) 
      
     return None
     
-def create_batch_folder(base_dir: Path) -> Path:
+def create_batch_folder(batches_dir: Path) -> Path:
     """
     create a timestamped folder
     """
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    batch_path = base_dir / f"batch_{timestamp}"
+    batch_path = batches_dir / f"batch_{timestamp}"
     batch_path.mkdir(parents=True, exist_ok=True)
     LOGGER.info(f"created new folder at {batch_path}")
     return batch_path
-
-# moving method from note book
-
-
-
 
 # downloads
 
 def download_landing_page(
         driver,
         first_page_url,
-        batch_folder,
+        landing_pages_dir: Path,
         request_type_config:dict):
     file_name = f"{request_type_config['name'].lower()}_landing.html"
-    webpage_path = base_path / file_name 
+    webpage_path = landing_pages_dir / file_name 
     
     if webpage_path.exists():
-        LOGGER.info(f'landing page already exists at {webpage_page}; skipping download')
-        return webpage_path
+        LOGGER.info(f'landing page already exists at {webpage_path}; overwriting') 
     
     try:
         driver.get(first_page_url)
@@ -191,16 +185,17 @@ def download_landing_page(
         
     except Exception as e:
         logger.error(f"error fetching {first_page_url}: {e}")
+        raise
     
     finally:
         driver.quit()
         LOGGER.info("Selenium WebDriver closed")
-    LOGGER.info(f"{webpage_path} already exists. Skipping download.")
     return webpage_path
 
 
 # bulk download
 def execute_bulk_download(driver, scrape_plan, batch_folder: Path):
+    
     total = len(scrape_plan)
     wait =  WebDriverWait(driver, 15)
     

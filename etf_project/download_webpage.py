@@ -143,6 +143,44 @@ def create_batch_folder(base_dir: Path) -> Path:
     return batch_path
 
 # moving method from note book
+
+
+
+
+# downloads
+
+def download_landing_page(
+        driver,
+        first_page_url,
+        batch_folder,
+        request_type_config:dict):
+    file_name = f"{request_type_config['name'].lower()}.html"
+    webpage_path = base_path / file_name 
+    
+    if webpage_path.exists():
+        LOGGER.info(f'landing page already exists at {webpage_page}; skipping download')
+        return webpage_path
+    
+    try:
+        driver.get(first_page_url)
+        logger.info('Explicit wait for page to load')
+        wait = WebDriverWait(driver, 15)
+        wait.until(EC.presence_of_element_located((By.CLASS_NAME, "styled-row")))
+        
+        with open(webpage_path, 'w', encoding='utf-8') as f:
+            f.write(driver.page_source)
+        logger.info(f"{first_page_url} saved to {webpage_path}")
+        
+    except Exception as e:
+        logger.error(f"error fetching {first_page_url}: {e}")
+    
+    finally:
+        driver.quit()
+        logger.info("Selenium WebDriver closed")
+    logger.info(f"{webpage_path} already exists. Skipping download.")
+    return webpage_path
+
+
 # bulk download
 def execute_bulk_download(driver, scrape_plan, batch_folder):
     total = len(scrape_plan)
@@ -179,35 +217,8 @@ def execute_bulk_download(driver, scrape_plan, batch_folder):
             continue
             
     logger.info(f"Bulk download complete. Files saved to {batch_folder}")
-
-
-
-# downloads
-
-def download_landing_page(driver, url, base_path):
-    webpage_path = base_path / 'finviz_etf_page_one.html'
-    if not webpage_path.exists():
-        try:
-            driver.get(url)
-            logger.info('Explicit wait for page to load')
-            wait = WebDriverWait(driver, 15)
-            wait.until(EC.presence_of_element_located((By.CLASS_NAME, "styled-row")))
-            
-            with open(webpage_path, 'w', encoding='utf-8') as f:
-                f.write(driver.page_source)
-            logger.info(f"{url=} saved to {webpage_path}")
-            
-        except Exception as e:
-            logger.error(f"error fetching {url=}: {e}")
-        
-        finally:
-            driver.quit()
-            logger.info("Selenium WebDriver closed")
-    logger.info(f"{webpage_path} already exists. Skipping download.")
-    return webpage_path
-
-
-
+    
+    
 def main():
     args = get_args()
     

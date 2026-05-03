@@ -50,15 +50,39 @@ SITE_CONFIG = {
     "base_urls": finviz_config.BASE_URL,
 }
 
-
-
+# arg parse
 def get_args():
-    parser = argparse.ArgumentParser(description="ETF Scraper for Finviz")
+    parser = argparse.ArgumentParser(description="Data Scraper for Finviz")
+    parse.add_argument(
+        "--webpage",
+        required=True,
+        choices=list(SUPPORTED.keys()),
+        help="which webpage to scrape")
+    parse.add_argument(
+        "--data",
+        required=True,
+        choices=["etf", "aum"],
+        help="which data to scrape"
+    )
     parse.add_argument("--pages", type=int, default=None, help="number of pages to download default is all")
-    parse.add_argument("--headless", action="store_true", help="run browser in headless mode")
-    parse.add_argument("--webpage", choices=['etf', 'aum'], default='etf', help="which webpage to scrape")
+    parse.add_argument("--headless", action="store_true", help="run selenium in headless mode")
     return parser.parse_args()
 
+def resolve_config(webpage:str, data_type: str) -> tuple[dict, dict]:
+    """
+    check if webpage is supported 
+    """
+    if webpage not in SUPPORTED:
+        LOGGER.error(f"webpage {webpage} not supported. Supported pages are: {list(SUPPORTED.keys())}")
+        raise ValueError(f"unsupported webpage {webpage}")
+    type_map = SUPPORTED[webpage]
+    if data_type not in type_map:
+        LOGGER.error(f"data type {data_type} not supported for webpage {webpage}. Supported types are: {list(type_map.keys())}")
+        raise ValueError(f"unsupported data type {data_type} for webpage {webpage}")
+    return type_map[data_type], SITE_CONFIG[webpage]
+    
+
+# driver setup - default Firefox
 def create_driver(headless: bool = False)-> webDriver.Firefox:
     """
     create a firefox driver

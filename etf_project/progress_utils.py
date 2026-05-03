@@ -11,7 +11,7 @@ ERROR_LOG_FILE = 'errors.json'
 def create_progress_file(
         batch_folder: Path,
         webpage:str,
-        request:str,
+        data_request:str,
         total_pages:int
 ) -> Path:
     progress_path = batch_folder / PROGRESS_FILE
@@ -19,7 +19,7 @@ def create_progress_file(
     progress = {
         "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "webpage": webpage,
-        "request": request,
+        "data_request": data_request,
         "total_pages":  total_pages,
         "completed": []
     }

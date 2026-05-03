@@ -163,7 +163,7 @@ def download_landing_page(
     
     try:
         driver.get(first_page_url)
-        logger.info('Explicit wait for page to load')
+        LOGGER.info('Explicit wait for page to load')
         wait = WebDriverWait(driver, 15)
         wait.until(EC.presence_of_element_located((By.CLASS_NAME, "styled-row")))
         
@@ -176,23 +176,25 @@ def download_landing_page(
     
     finally:
         driver.quit()
-        logger.info("Selenium WebDriver closed")
-    logger.info(f"{webpage_path} already exists. Skipping download.")
+        LOGGER.info("Selenium WebDriver closed")
+    LOGGER.info(f"{webpage_path} already exists. Skipping download.")
     return webpage_path
 
 
 # bulk download
-def execute_bulk_download(driver, scrape_plan, batch_folder):
+def execute_bulk_download(driver, scrape_plan, batch_folder: Path):
     total = len(scrape_plan)
     wait =  WebDriverWait(driver, 15)
     
     for task in scrape_plan:
-        file_name = f"page_{task['index']:03d}_offset_{task['offset']}.html"
-        save_path = Path(batch_folder) / file_name
+        match task["url"] in completed_urls:
+            case True:
+                LOGGER.info(f"skipping {task['index']} - already downloaded")
+                continue
         
-        if save_path.exists():
-            logger.info(f"skipping {task['index']} - already exists")
-            continue
+        file_name = f"page_{task['index']:03d}_offset_{task['offset']}.html"
+        save_path = batch_folder / file_name
+        
         try:
             logger.info(f'downloading [{task["index"]}/{total}] {task['label']}')
             driver.get(task['url'])
@@ -229,18 +231,4 @@ def main():
     base_dir = CWD / "webpages"
     
     webpage = args.webpage
-    
-    try:
-        first_page_url = download_landing_page(driver, FINVIZ_ETF_PAGE_BASE, base_dir)
-        dom_tree = map_landing_page(first_page_url)
 
-        full_scrape_plan = extract_scrape_list_from_tree(dom_tree, webpage)
-
-        if args.pages:
-            scrape_plan = full_scrape_plan[:args.pages]
-            logger.info(f"limited scrape plan to first {args.pages} pages")
-
-        recent_batch = get_latest_batch_folder(base_dir)
-        batch_folder = None
-        
-        
